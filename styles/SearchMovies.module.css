@@ -1,0 +1,74 @@
+.searchForm {
+	position: relative;
+	display: flex;
+	z-index: 2;
+	justify-content: center;
+}
+
+.resultsTextHome {
+	z-index: 2;
+	color: white;
+	position: relative;
+	text-shadow: 4px 4px 5px white;
+	margin: 5vh 0px 5vh 2vw;
+	text-align: center;
+}
+
+.form {
+	align-items: baseline;
+	display: flex;
+	margin: 0 2vw 0 2vw;
+}
+
+.searchFormWrapper {
+	grid-area: c;
+}
+
+.faqsWrapper {
+	position: relative;
+	font-size: 25px;
+	text-decoration: none;
+}
+
+.gridWrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-content: center;
+	margin: 15vh 5vw 5vh 5vh;
+	position: absolute;
+	gap: 1.5rem;
+	z-index: 2;
+	align-items: center;
+	grid-template-areas: 'a a' 'b b' 'c c';
+	justify-items: center;
+}
+
+@media only screen and (max-width: 500px) {
+	.searchFormWrapper {
+		grid-area: c;
+	}
+	.faqsWrapper {
+		grid-column: a;
+	}
+	.randomWordWrapper {
+		grid-area: b;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.searchFormWrapper {
+		grid-area: c;
+	}
+	.faqsWrapper {
+		grid-column: a;
+	}
+	.randomWordWrapper {
+		grid-area: b;
+	}
+}
+
+@media only screen and (min-width: 700px) {
+	.searchFormWrapper {
+		grid-area: c;
+	}
+} ;

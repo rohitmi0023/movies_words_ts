@@ -1,0 +1,1 @@
+SELECT * FROM `movies_words`.`voting` LIMIT 1000;

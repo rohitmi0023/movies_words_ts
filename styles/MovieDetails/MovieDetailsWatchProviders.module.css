@@ -1,0 +1,29 @@
+.watchProvider {
+	margin: 2vh 0;
+}
+
+.eachWatch {
+	padding: 1vh 1vw;
+}
+
+.eachWatch h3 {
+	text-align: center;
+}
+
+.watchWrapper {
+	gap: 1rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+}
+
+.Provider {
+	margin-top: 1vh;
+	gap: 1vw;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(100px, auto));
+	justify-items: center;
+}
+
+.eachProvider {
+	display: grid;
+}

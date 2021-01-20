@@ -1,0 +1,26 @@
+.productionWrapper {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+	gap: 1rem;
+	margin: 1vh 0;
+}
+
+.eachProduction {
+	display: grid;
+	justify-items: center;
+}
+
+.eachProduction img {
+	width: 100%;
+	padding: 1vh 1vw;
+}
+
+.productionTeamWrapper {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+	gap: 1rem;
+}
+
+.eachProductionTeam {
+	justify-items: center;
+}

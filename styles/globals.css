@@ -1,0 +1,247 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+/* SearchMovies */
+/* Card css module */
+
+.search-text-field {
+	width: 100%;
+}
+
+.search-button {
+	align-self: flex-end;
+}
+
+.MuiFilledInput-input {
+	width: 100%;
+	background: rgb(174, 206, 203) !important;
+}
+
+.MuiInputBase-input {
+	width: 100%;
+	font-weight: 900 !important;
+	text-align: center;
+}
+
+/* SearchResult */
+/* SearchResults.module.css */
+
+/* SearchResult and SearchMovies */
+/* SearchResults.module.css */
+.resultsText {
+	z-index: 2;
+	color: white;
+	position: relative;
+	text-shadow: 4px 4px 5px white;
+	margin: 5vh 0px 10vh 2vw;
+}
+
+/* [movieId] */
+/* [movieId] and dict */
+
+.titleHeading {
+	color: white;
+	text-align: center;
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 900;
+}
+
+.titleAnchor {
+	text-decoration: none !important;
+	color: white !important;
+	padding: 5px 10px;
+}
+
+.currentMovieTitle {
+	clear: both;
+	display: flow-root;
+	text-align: center;
+	font-size: 35px;
+	margin: 20px 0px;
+	font-weight: bold;
+	color: white;
+	font-family: 'Sansita Swashed', cursive;
+}
+
+.currentMovieHead {
+	position: relative;
+	clear: both;
+	margin: 70px 45px;
+}
+
+.currentMoviePoster {
+	float: left;
+	max-height: 283px;
+	max-width: 195px;
+}
+
+.currentMovieDetailsHead {
+	margin: 0px auto;
+	display: grid;
+	padding-left: 30px;
+}
+
+.currentMoviePlot {
+	font-size: 14px;
+	padding-left: 20px;
+}
+
+.currentMovieDetails {
+	display: flex;
+}
+
+/* dict */
+/* .formStyle {
+	display: inline;
+	position: absolute;
+} */
+
+.matchedWords {
+	border: 2px dashed blue;
+	margin: 5px 5px;
+	font-weight: 600;
+	font-style: italic;
+	padding: 10px 10px;
+	display: inline-block;
+}
+
+/* signUpPage */
+
+/* NavBar */
+
+.navbar-tabs {
+	color: rgba(213, 103, 210, 1);
+	font-size: 27px !important;
+	text-decoration: none !important;
+	float: right;
+	margin: 5px 1rem 0px 1rem;
+}
+
+.nav-profile-icon {
+	text-decoration: none;
+	float: right;
+	margin: 0px 25px 0px 5px;
+}
+
+.navlink::after {
+	content: '';
+	display: block;
+	height: 3px;
+	max-width: 100%;
+	width: 0%;
+	transition: width 1s;
+	background: rgba(213, 103, 210, 1);
+}
+
+.navlink:hover::after {
+	width: 100%;
+	max-width: 100%;
+	transition: width 1s;
+}
+
+/* WordResults */
+.word-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.each-word-wrapper {
+	color: white;
+	display: flex;
+	border-radius: 15px;
+	padding: 2vh 1vw;
+	margin: 1vh 1vw;
+}
+
+/* Image background */
+/* Image background */
+.imageWrapper {
+	position: relative;
+	width: 100%;
+}
+
+.imageWrapper img {
+	width: 100%;
+	opacity: 1;
+}
+
+.imageWrapper::after {
+	width: 100%;
+	height: 100%;
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: rgba(57, 61, 73, 0.5);
+	opacity: 2;
+	z-index: 0.1;
+}
+
+.contentWrapper {
+	z-index: 1;
+	position: absolute;
+	width: 100%;
+	background: rgba(57, 61, 73, 0.5);
+}
+
+/* EachWord */
+
+.word {
+	padding: 0 5px;
+}
+
+.votes {
+	padding: 0 5px;
+}
+
+/* .EmailPage__social-separator {
+	margin-bottom: 24px;
+}
+
+.RuleWithText {
+	border: 0;
+	height: auto;
+	outline: 0;
+	position: relative;
+	text-align: center;
+	color: #000000;
+}
+
+.RuleWithText:before {
+	background: #000000;
+	content: '';
+	height: 1px;
+	left: 0;
+	position: absolute;
+	top: 50%;
+	width: 100%;
+}
+
+.RuleWithText:after {
+	background-color: #ea35c3;
+	color: black;
+	content: attr(data-content);
+	display: inline-block;
+	font-size: 17px;
+	font-weight: 300;
+	line-height: 21px;
+	padding: 0 0.5em;
+	position: relative;
+} */
+
+/* .social-tab {
+	width: 100%;
+	border-radius: 100px !important;
+	font-weight: normal;
+	padding: 10px 0 !important;
+	margin: 5px 0px;
+}
+.google-tab {
+	background-color: white !important;
+}
+.facebook-tab {
+	background-color: #3b5998 !important;
+	color: white;
+} */

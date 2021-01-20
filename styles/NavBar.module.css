@@ -1,0 +1,64 @@
+.navbarBrand {
+	float: left;
+	color: rgb(85, 90, 163);
+	margin: 0px 15px;
+	background: rgba(213, 103, 210, 1);
+}
+
+.navbarBrand:hover {
+	color: rgba(213, 103, 210, 1);
+}
+
+.navbar {
+	text-decoration: none !important;
+	font-family: 'montreal-bold';
+	src: url('../public/Montreal-Bold.ttf');
+	letter-spacing: -2px;
+	padding: 2px 5px;
+	border-radius: 5%;
+}
+
+@media only screen and (min-width: '500px') {
+	.navbar {
+		letter-spacing: 1px;
+	}
+}
+
+.navbar:hover {
+	background: none;
+}
+
+.navbarBrand::after {
+	content: '';
+	height: 3px;
+	display: block;
+	max-width: 100%;
+	width: 0%;
+	transition: width 1s;
+	background: rgb(85, 90, 163);
+}
+
+.navbarTabs::after {
+	content: '';
+	height: 3px;
+	display: block;
+	max-width: 100%;
+	width: 0%;
+	transition: width 1s;
+	background: rgba(213, 103, 210, 1);
+}
+
+.navbar:hover::after {
+	width: 100%;
+}
+
+.navbarTabs {
+	color: rgba(213, 103, 210, 1);
+	float: right;
+	margin: 0 1rem 0px 0;
+	background: rgb(85, 90, 163);
+}
+
+.navbarTabs:hover {
+	color: rgb(76, 82, 165);
+}

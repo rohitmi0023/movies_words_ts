@@ -1,0 +1,32 @@
+// auth
+export const USER_LOADED = 'USER_LOADED';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+export const VERIFICATION_SUCCESS = 'VERIFICATION_SUCCESS';
+
+// alert
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
+
+// word
+export const WORDS_LOADED = 'WORDS_LOADED';
+export const NEW_WORD_ADDED = 'NEW_WORD_ADDED';
+export const USER_VOTING = 'USER_VOTING';
+export const NEW_UPVOTE = 'NEW_UPVOTE';
+export const NEW_DOWNVOTE = 'NEW_DOWNVOTE';
+export const DELETE_WORD = 'DELETE_WORD';
+
+//movieImages
+export const RANDOM_IMAGES_ADDITION = 'RANDOM_IMAGES_ADDITION';
+export const RANDOM_NUMBER = 'RANDOM_NUMBER';
+export const CURRENT_IMAGE = 'CURRENT_IMAGE';
+export const RANDOM_IMAGES_ADDITION_FAILED = 'RANDOM_IMAGES_ADDITION_FAILED';
+
+// subtitles
+export const SUBTITLES_WORD_ADD = 'SUBTITLES_WORD_ADD';
+export const CHANGE_LIMIT = 'CHANGE_LIMIT';
+export const CHANGE_CURRENT10 = 'CHANGE_CURRENT10';

@@ -1,0 +1,24 @@
+.cardCss {
+	margin: 20vh 5vw;
+	text-align: center;
+	z-index: 1;
+	/* Add shadows to create the "card" effect */
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
+	transition: 1s;
+	background-image: radial-gradient(rgb(130, 179, 194), rgba(0, 0, 0, 0));
+	padding: 30px 7vw;
+	height: max-content;
+	width: max-content;
+	border-radius: 15%;
+}
+
+/* On mouse-over, add a deeper shadow */
+.cardCss:focus-within {
+	box-shadow: 0 15px 15px 0 rgb(139, 183, 187);
+	background-color: rgb(123, 171, 190);
+}
+
+.cardCss:hover {
+	box-shadow: 0 15px 15px 0 rgb(139, 183, 187);
+	background-color: rgb(123, 171, 190);
+}

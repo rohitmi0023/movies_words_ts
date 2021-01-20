@@ -1,0 +1,106 @@
+.gridWrapper {
+	z-index: 2;
+	display: grid;
+	margin: 5px 5px;
+	grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+	grid-auto-rows: 1fr;
+	gap: 1.3rem;
+}
+
+@media only screen and (max-width: 455px) {
+	.gridWrapper {
+		grid-template-columns: repeat(auto-fill, minmax(100px, auto));
+		gap: 0.5rem;
+	}
+	.gridWrapper > div:nth-child(n + 3) {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 650px) {
+	.gridWrapper {
+		grid-template-columns: repeat(auto-fill, minmax(120px, auto));
+		gap: 1rem;
+	}
+	.gridWrapper > div:nth-child(n + 5) {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 881px) {
+	.gridWrapper > div:nth-child(n + 7) {
+		display: none;
+	}
+}
+
+.movie {
+	justify-self: center;
+	border-radius: 50%;
+	cursor: pointer;
+	display: flex;
+	position: relative;
+}
+
+.imgContent {
+	border-radius: 50%;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.imgContent::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: rgba(143, 162, 163, 0.6);
+	z-index: 1;
+	opacity: 1;
+	border-radius: 7%;
+}
+
+.info {
+	color: white;
+	position: absolute;
+	z-index: 2;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.text {
+	font-size: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.text:hover {
+	transition: 1s;
+	font-size: 22px;
+}
+
+.moviePoster {
+	width: 100%;
+	border-radius: 7%;
+}
+
+.movieTitle {
+	font-size: 20px;
+	text-align: center;
+	text-decoration: none;
+	margin: 5px 0px;
+}
+
+.resultsText {
+	z-index: 2;
+	color: white;
+	position: relative;
+	text-shadow: 4px 4px 5px white;
+	margin: 5vh 0px 5vh 2vw;
+}

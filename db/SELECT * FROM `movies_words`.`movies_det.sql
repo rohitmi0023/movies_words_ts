@@ -1,0 +1,1 @@
+SELECT * FROM `movies_words`.`movies_details` LIMIT 1000;

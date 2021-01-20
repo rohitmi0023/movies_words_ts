@@ -1,0 +1,13 @@
+.statsWrapper {
+	padding: 2vh 1vw;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+	gap: 2vw;
+}
+
+.eachStats {
+	display: grid;
+	justify-items: center;
+	padding: 1vh 2vw;
+	text-align: center;
+}

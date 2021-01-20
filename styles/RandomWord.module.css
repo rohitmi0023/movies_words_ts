@@ -1,0 +1,80 @@
+/* card module */
+.headingText {
+	font-family: 'Sansita Swashed', cursive;
+}
+
+.container {
+	margin: 5vh;
+	color: white;
+}
+
+.pagination {
+	float: right;
+	margin: 0 5vw 3vh 0;
+}
+
+.textCentre {
+	text-align: center;
+}
+
+.gridWrapper {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+	align-items: self-start;
+	clear: right;
+	gap: 1.5rem;
+	justify-items: center;
+}
+
+.wrapper {
+	position: relative;
+	max-width: 350px;
+	transition: 3s;
+}
+
+.imgContent {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+.imgContent img {
+	height: 100%;
+	border-radius: 3%;
+	background-size: cover;
+}
+
+.imgContent::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 3%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+	opacity: 1;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	position: relative;
+	align-items: center;
+	margin: 5vh 0 10vh 0;
+	z-index: 4;
+	opacity: 1;
+	width: 100%;
+}
+
+.definitionText {
+	margin: 1vh 2vw 3vh 2vw !important;
+}
+
+.movieName {
+	text-align: center;
+	margin: 3vh 2vw !important;
+}

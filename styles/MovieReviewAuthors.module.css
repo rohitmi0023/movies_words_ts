@@ -1,0 +1,15 @@
+.authorsWrapper {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+	gap: 1rem;
+	align-items: center;
+}
+
+.eachAuthors {
+	text-align: center;
+}
+
+.eachAuthors img {
+	width: 100%;
+	background-size: cover;
+}

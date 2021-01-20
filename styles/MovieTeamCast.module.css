@@ -1,0 +1,20 @@
+.castWrapper {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+	height: 400px;
+}
+
+.eachCast {
+	display: grid;
+	justify-items: center;
+}
+
+.eachCast img {
+	width: 100%;
+	border-radius: 15%;
+}
+
+.eachName {
+	display: contents;
+}
