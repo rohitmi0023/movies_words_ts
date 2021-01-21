@@ -87,7 +87,9 @@ export default async (req, res) => {
 async function main(emailVerifyHash, userId, email, origin) {
 	console.log(`Came here in main function`);
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+	console.log(origin);
 	const link = `${origin}/auth/verify/${userId}?q=${emailVerifyHash}`;
+	console.log(link);
 	const msg = {
 		to: email,
 		from: 'rohitracer0023@gmail.com',
