@@ -62,7 +62,7 @@ export default async (req, res) => {
 									},
 									process.env.JWT_SECRET,
 									(err, token) => {
-										const origin = req.headers['origin'];
+										const origin = req.headers.origin;
 										main(emailVerifyHash, userId, email, origin).catch(console.error);
 										return res.status(200).send({ token, emailVerifyHash });
 									}
