@@ -42,9 +42,9 @@ handler.use((req, res, next) => {
 
 handler.get<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 	aws.config.update({
-		accessKeyId: process.env.AWS_ACCESS_KEY,
-		secretAccessKey: process.env.AWS_SECRET_KEY,
-		region: process.env.AWS_REGION,
+		accessKeyId: process.env.AWS_ACCESS_KEY_VERCEL,
+		secretAccessKey: process.env.AWS_SECRET_KEY_VERCEL,
+		region: process.env.AWS_REGION_VERCEL,
 		signatureVersion: 'v4',
 	});
 	const s3 = new aws.S3();
@@ -60,10 +60,12 @@ handler.get<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		],
 	};
 	await s3.createPresignedPost(params, (err, data) => {
+		console.log(process.env.AWS_REGION_VERCEL);
 		if (data) {
 			return res.status(200).json(data);
 		}
 		if (err) {
+			console.log(err);
 			return res.status(500).json({ message: 'Upload Failed!', type: 'subtitle' });
 		}
 	});

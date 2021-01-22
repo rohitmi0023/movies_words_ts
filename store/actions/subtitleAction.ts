@@ -79,6 +79,9 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 			await Axios.post(`/api/movies/${currentMovie.movieId}/subtitles/db?user=${user.id}`, body, config);
 			dispatch(setAlert('Upload success!', 'subtitle', 'success'));
 		} catch (err) {
+			console.log(err);
+			console.log(err.message);
+			console.log(err.response);
 			if (err.type) {
 				dispatch(setAlert(err.message, err.type, err.variant));
 			}
