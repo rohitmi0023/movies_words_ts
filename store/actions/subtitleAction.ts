@@ -131,6 +131,9 @@ export const extractSubtitleAction = ({ currentMovie, user }) => async dispatch 
 			throw { message: "You have'nt added subtitle for this movie!", type: 'extractWords' };
 		}
 	} catch (error) {
+		console.log(error);
+		console.log(error.response);
+		console.log(error.type);
 		if (error.type) {
 			dispatch(setAlert(error.message, error.type, 'error'));
 		}

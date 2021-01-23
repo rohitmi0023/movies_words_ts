@@ -69,7 +69,9 @@ export default async function handler(req, res) {
 					response: unMatchedWords,
 				});
 			} catch (err) {
-				res.status(500).json({ message: 'Unable to fetch uploaded subtitle!', type: 'extractSubtitle' });
+				console.log(err);
+				console.log(err.message);
+				res.status(500).json({ message: 'Unable to extract words!', type: 'extractSubtitle' });
 			}
 		}
 	});
