@@ -35,11 +35,11 @@ export default async function handler(req, res) {
 					.filter(each => words.check(each))
 			);
 			try {
-				const res1Sheet = await readXlsxFile('public/Words.xlsx', { sheet: 1 });
-				const res2Sheet = await readXlsxFile('public/Words.xlsx', { sheet: 2 });
-				const res3Sheet = await readXlsxFile('public/Words.xlsx', { sheet: 3 });
-				const res4Sheet = await readXlsxFile('public/Words.xlsx', { sheet: 4 });
-				const res5Sheet = await readXlsxFile('public/Words.xlsx', { sheet: 5 });
+				const res1Sheet = await readXlsxFile('/Words.xlsx', { sheet: 1 });
+				const res2Sheet = await readXlsxFile('/Words.xlsx', { sheet: 2 });
+				const res3Sheet = await readXlsxFile('/Words.xlsx', { sheet: 3 });
+				const res4Sheet = await readXlsxFile('/Words.xlsx', { sheet: 4 });
+				const res5Sheet = await readXlsxFile('/Words.xlsx', { sheet: 5 });
 				const totalSheets = _.concat(res1Sheet, res2Sheet, res3Sheet, res4Sheet, res5Sheet);
 				const dataSheetWords = totalSheets
 					.map(each =>
