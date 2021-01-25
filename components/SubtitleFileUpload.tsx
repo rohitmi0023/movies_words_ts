@@ -93,7 +93,7 @@ const SubtitleFileUpload = ({
 				</div>
 			) : null}
 			{wordFail.length ? (
-				wordFail[0].alertType === 'word' || wordFail[0].alertType === 'extractWords' ? (
+				wordFail[0].alertType === 'word' || wordFail[0].alertType === 'extractWords' || wordFail[0].alertType === 'extractSubtitle' ? (
 					<AlertBar message={wordFail[0].msg} type={wordFail[0].variant} />
 				) : null
 			) : null}
