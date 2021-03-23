@@ -60,7 +60,7 @@ const MovieTeam = ({ movieDetailsState }) => {
 			try {
 				const movieId = window.location.pathname.replace('/movies/', '');
 				const res = await Axios.get(
-					`https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US`
+					`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US`
 				);
 				if (mounted) {
 					if (res.data.id && res.data.cast && res.data.crew) {

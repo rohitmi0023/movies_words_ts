@@ -71,4 +71,8 @@
 	.searchFormWrapper {
 		grid-area: c;
 	}
-} ;
+}
+
+.searchFormWrapper {
+	min-height: 100vh;
+}

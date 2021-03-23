@@ -4,6 +4,8 @@ const connection = require('../../../db/dbconfig');
 const jwt = require('jsonwebtoken');
 import nc from 'next-connect';
 const handler = nc();
+import Cors from 'cors';
+import initMiddleware from '../../../lib/init-middleware';
 
 interface ExtendedRequest {
 	userId: any;
@@ -14,7 +16,20 @@ interface ExtendedResponse {
 	status: any;
 }
 
-handler.use((req, res, next) => {
+// Initialize the cors middleware
+const cors = initMiddleware(
+	// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+	Cors({
+		origin: '*',
+		methods: ['GET', 'POST', 'OPTIONS'],
+		preflightContinue: true,
+		'access-control-allow-headers':
+			'Authorization, Content-Type, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After, DNT, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Range',
+	})
+);
+
+handler.use(async (req, res, next) => {
+	await cors(req, res);
 	const token = req.headers['auth-header-token'];
 	if (!token) {
 		return res.status(401).json({ msg: 'No token, authentication failed' });
@@ -28,7 +43,8 @@ handler.use((req, res, next) => {
 	next();
 });
 
-handler.get<ExtendedRequest, ExtendedResponse>((req, res) => {
+handler.options<ExtendedRequest, ExtendedResponse>(async (req, res) => {
+	await cors(req, res);
 	try {
 		connection.query('SELECT email, username, date_registered, avatar from `users` WHERE `id` = ?', [req.userId], (err, results) => {
 			if (err) throw err;

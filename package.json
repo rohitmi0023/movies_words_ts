@@ -27,6 +27,7 @@
 		"check-word": "^1.1.0",
 		"clsx": "^1.1.1",
 		"confirm-dialog": "^0.1.2",
+		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"express-validator": "^6.6.1",

@@ -12,7 +12,7 @@ import { logout } from '../store/actions/authAction';
 import styles from '../styles/NavBar.module.css';
 import clsx from 'clsx';
 
-const NavBar = ({ isAuthenticated, user, logout, color }) => {
+const NavBar = ({ isAuthenticated, user, logout }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const router = useRouter();
 
@@ -31,8 +31,8 @@ const NavBar = ({ isAuthenticated, user, logout, color }) => {
 
 	return (
 		<Fragment>
-			<AppBar style={{ width: '100%', position: 'absolute', backgroundColor: color ? color : 'inherit' }}>
-				<div style={{ margin: '15px 0px', position: 'relative' }}>
+			<AppBar style={{ width: '100%', position: 'absolute', backgroundColor: 'inherit' }}>
+				<div style={{ margin: '15px 0px' }}>
 					<Typography variant='h4'>
 						<Link href='/'>
 							<a className={clsx(styles.navbarBrand, styles.navbar)}>Home</a>

@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from 'react';
+// displaying home page from navbar, faqs, random word to search bar
+import React, { useState, Fragment, useEffect } from 'react';
 import axios from 'axios';
 import SearchResult from './SearchResult';
 import TextField from '@material-ui/core/TextField';
@@ -14,10 +15,14 @@ import Link from 'next/link';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { randomImagesAddition, randomNumberFunction } from '../store/actions/movieImagesAction';
 
 let cancelToken;
 const useStyles = makeStyles({
 	root: {
+		opacity: 0.8,
 		textTransform: 'none',
 		padding: '6px 12px',
 		border: '2px solid',
@@ -32,8 +37,10 @@ const useStyles = makeStyles({
 	},
 });
 
-const SearchMovies = () => {
+const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesLoading, movieImages, randomNumberState }) => {
 	const classes = useStyles();
+
+	// React local states
 	const [searchFormData, setSearchFormData] = useState('');
 	const [searchResultState, setSearchResultState] = useState({
 		Response: null,
@@ -42,6 +49,7 @@ const SearchMovies = () => {
 		loading: true,
 	})!;
 
+	// uses local state to show results on every keystroke
 	const handleChange = async e => {
 		setSearchResultState({
 			...searchResultState,
@@ -51,7 +59,7 @@ const SearchMovies = () => {
 			loading: true,
 		});
 		setSearchFormData(e.target.value);
-		const urlForSearch = `https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
+		const urlForSearch = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
 		if (e.target.value) {
 			try {
 				if (typeof cancelToken !== typeof undefined) {
@@ -88,6 +96,7 @@ const SearchMovies = () => {
 		}
 	};
 
+	// uses local state to show results on clicking submit button
 	const handleSubmit = async e => {
 		e.preventDefault();
 		setSearchResultState({
@@ -98,7 +107,7 @@ const SearchMovies = () => {
 			loading: true,
 		});
 		if (searchFormData.length) {
-			const urlForTitle = `https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${searchFormData}&page=1&include_adult=false`;
+			const urlForTitle = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${searchFormData}&page=1&include_adult=false`;
 			const res = await axios.get(urlForTitle);
 			try {
 				if (res.data.results.length) {
@@ -128,81 +137,129 @@ const SearchMovies = () => {
 		}
 	};
 
+	useEffect(() => {
+		const MovieFetching = async () => {
+			try {
+				randomNumberFunction();
+				randomImagesAddition();
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		MovieFetching();
+	}, []);
+
 	return (
 		<Fragment>
-			<NavBar />
-			<div className={styles.gridWrapper}>
-				{/* {!searchFormData ? ( */}
-				<div className={styles.faqsWrapper}>
-					<Link href='/faqs'>
-						<a>
-							<Card variant='outlined' className={classes.root}>
-								<CardContent>
-									<Typography variant='h5' style={{ color: 'white' }}>
-										First time here? Click here and spend two minutes by visiting FAQ(s) to know what this website is all about.
-									</Typography>
-								</CardContent>
-							</Card>
-						</a>
-					</Link>
-				</div>
-				<div className={styles.randomWordWrapper}>
-					<Link href='/randomWord'>
-						<a>
-							<Card variant='outlined' className={classes.root}>
-								<CardContent>
-									<Typography variant='h5' style={{ color: 'white' }}>
-										Learn some new word by clicking here.
-									</Typography>
-								</CardContent>
-							</Card>
-						</a>
-					</Link>
-				</div>
-				{/* ) : null} */}
-				<div className={styles.searchFormWrapper}>
-					<form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
-						<div className={styles.form}>
-							<TextField
-								label='Enter the movie name'
-								variant='filled'
-								type='text'
-								onChange={e => handleChange(e)}
-								value={searchFormData}
-								className='MuiFilledInput-input MuiInputBase-input MuiInputLabel-root search-text-field'
-							/>
-						</div>
-						<div className='form'>
-							<Button
-								variant='contained'
-								color='primary'
-								onClick={e => handleSubmit(e)}
-								className={clsx('search-button', classes.root)}
-							>
-								Submit
-							</Button>
-						</div>
-					</form>
-					{searchFormData ? (
-						!searchResultState.loading ? (
-							searchResultState.Response === true ? (
-								<SearchResult searchresult={searchResultState} />
-							) : (
-								// <p>Hello</p>
-								searchResultState.Response === false && <p className={styles.resultsTextHome}>{searchResultState.Error}</p>
-							)
-						) : (
-							<div style={{ margin: '10vh 0 0 5vw' }} className={styles.resultsTextHome}>
-								<BouncingBallLoader message='results...' variant='indigoHUE' />
+			<div style={{ position: 'relative' }}>
+				{!movieImagesLoading ? (
+					<div
+						className='imageWrapper'
+						style={{
+							backgroundImage:
+								movieImages.length === 10
+									? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+									: 'dimgrey',
+							backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
+							backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',
+							width: '100%',
+						}}
+					>
+						<NavBar />
+						<div
+							className={styles.gridWrapper}
+							style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}
+						>
+							<div className={styles.faqsWrapper}>
+								<Link href='/faqs'>
+									<a>
+										<Card variant='outlined' className={classes.root}>
+											<CardContent>
+												<Typography variant='h5' style={{ color: 'white' }}>
+													First time here? Click here to know us.
+												</Typography>
+											</CardContent>
+										</Card>
+									</a>
+								</Link>
 							</div>
-						)
-					) : (
-						<p className={styles.resultsTextHome}>Nothing Searched!!!</p>
-					)}
-				</div>
+							<div className={styles.randomWordWrapper}>
+								<Link href='/randomWord'>
+									<a>
+										<Card variant='outlined' className={classes.root}>
+											<CardContent>
+												<Typography variant='h5' style={{ color: 'white' }}>
+													Discover new word.
+												</Typography>
+											</CardContent>
+										</Card>
+									</a>
+								</Link>
+							</div>
+							<div className={styles.searchFormWrapper}>
+								<form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
+									<div className={styles.form}>
+										<TextField
+											label='Enter the movie name'
+											variant='filled'
+											type='text'
+											onChange={e => handleChange(e)}
+											value={searchFormData}
+											className='MuiFilledInput-input MuiInputBase-input MuiInputLabel-root search-text-field'
+										/>
+									</div>
+									<div className='form'>
+										<Button
+											variant='contained'
+											color='primary'
+											onClick={e => handleSubmit(e)}
+											className={clsx('search-button', classes.root)}
+										>
+											Submit
+										</Button>
+									</div>
+								</form>
+								{searchFormData ? (
+									!searchResultState.loading ? (
+										searchResultState.Response === true ? (
+											<SearchResult searchresult={searchResultState} />
+										) : (
+											searchResultState.Response === false && (
+												<p className={styles.resultsTextHome}>{searchResultState.Error}</p>
+											)
+										)
+									) : (
+										<div style={{ margin: '10vh 0 0 5vw' }} className={styles.resultsTextHome}>
+											<BouncingBallLoader message='results...' variant='indigoHUE' />
+										</div>
+									)
+								) : (
+									<p className={styles.resultsTextHome}>Nothing Searched!!!</p>
+								)}
+							</div>
+						</div>
+					</div>
+				) : (
+					<div style={{ margin: '40vh 40vw 0 40vw' }}>
+						<BouncingBallLoader message='image wallpaper' variant='purpleHUE' />
+					</div>
+				)}
 			</div>
 		</Fragment>
 	);
 };
 
-export default SearchMovies;
+const mapStateToProps = state => {
+	return {
+		movieImages: state.images.randomImages,
+		movieImagesLoading: state.images.loading,
+		randomNumberState: state.images.randomNumberState,
+	};
+};
+
+SearchMovies.propTypes = {
+	randomImagesAddition: PropTypes.func,
+	randomNumberFunction: PropTypes.func,
+};
+
+export default connect(mapStateToProps, { randomImagesAddition, randomNumberFunction })(SearchMovies);

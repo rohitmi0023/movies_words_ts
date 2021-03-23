@@ -21,11 +21,23 @@ const signup = ({ randomNumberFunction, movieImages, randomNumberState, randomIm
 		MovieFetching();
 	}, []);
 	return (
-		<Fragment>
-			<NavBar />
+		<div style={{ position: 'relative' }}>
 			{!movieImagesLoading ? (
-				<div className='imageWrapper'>
-					<div className='contentWrapper'>
+				<div
+					className='imageWrapper'
+					style={{
+						backgroundImage:
+							movieImages.length === 10
+								? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+								: 'dimgrey',
+						backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
+						backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',
+						width: '100%',
+						minHeight: '100vh',
+					}}
+				>
+					<NavBar />
+					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
 						<div className={styles.cardCss}>
 							<h2 style={{ padding: '10px 0 5px 0', fontWeight: 'bold' }}>Sign Up</h2>
 							<span>
@@ -39,18 +51,13 @@ const signup = ({ randomNumberFunction, movieImages, randomNumberState, randomIm
 							<SignUpForm />
 						</div>
 					</div>
-					{movieImages.length === 10 ? (
-						<img src={`https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}`} alt='movieImages' />
-					) : (
-						<div style={{ background: 'dimgrey', height: '100vh', textAlign: 'center' }}>Failed to load image wallpaper</div>
-					)}
 				</div>
 			) : (
 				<div style={{ margin: '40vh 40vw 0 40vw' }}>
 					<BouncingBallLoader message='image wallpaper' variant='purpleHUE' />
 				</div>
 			)}
-		</Fragment>
+		</div>
 	);
 };
 

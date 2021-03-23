@@ -38,9 +38,7 @@ const MovieStats = ({ movieStatsState }) => {
 						DVD: 'Loading...',
 						Rated: 'Loading...',
 					});
-					const res = await Axios.get(
-						`https://cors-anywhere.herokuapp.com/http://www.omdbapi.com/?i=${movieStatsState.imdb_id}&type=movie&apikey=${process.env.OMDB_KEY}`
-					);
+					const res = await Axios.get(`http://www.omdbapi.com/?i=${movieStatsState.imdb_id}&type=movie&apikey=${process.env.OMDB_KEY}`);
 					if (res.data.Response === 'True') {
 						const { Country, BoxOffice, DVD, Rated } = res.data;
 						if (mounted) {

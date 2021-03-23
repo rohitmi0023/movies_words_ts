@@ -24,7 +24,9 @@ export const movieImagesReducer = (state = movieImagesState, action) => {
 		case types.CURRENT_IMAGE:
 			return {
 				...state,
-				currentMovieImage: `https://image.tmdb.org/t/p/original${action.payload}`,
+				currentMovieImage: action.payload.poster
+					? `https://image.tmdb.org/t/p/original${action.payload.poster}`
+					: `https://image.tmdb.org/t/p/original${action.payload}`,
 				loading: false,
 			};
 		default:

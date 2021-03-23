@@ -60,7 +60,7 @@ const dictionary = ({ loadWords, wordFail, user, userVoting, loadingWords, newWo
 			try {
 				let movieIdQuery = window.location.pathname.replace('/movies/', '').replace('/dict', '');
 				const res = await Axios.get(
-					`https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/movie/${movieIdQuery}?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US`
+					`https://api.themoviedb.org/3/movie/${movieIdQuery}?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US`
 				);
 				const {
 					id,
@@ -128,74 +128,69 @@ const dictionary = ({ loadWords, wordFail, user, userVoting, loadingWords, newWo
 	}, []);
 
 	return (
-		<div>
-			<NavBar />
+		<div style={{ position: 'relative' }}>
 			{!movieImagesLoading ? (
-				<div className='imageWrapper'>
-					<div className='contentWrapper'>
-						<div style={{ width: '100%', position: 'relative' }}>
-							<div style={{ margin: '15vh 0' }}>
-								{currentMovie ? (
-									<Fragment>
-										{currentMovie.title && currentMovie.original_title ? (
-											<Typography variant='h3' className='titleHeading'>
-												<Link href='/movies/[movieId]' as={`/movies/${currentMovie.movieId}/`}>
-													<a className='titleAnchor'>{currentMovie.original_title}</a>
-												</Link>
-											</Typography>
-										) : (
-											<div style={{ textAlign: 'center', margin: '20px 0px' }}>
-												<BouncingBallLoader message='movie title details...' variant='indigoHUE' />
-											</div>
-										)}
-										<div className={styles.wrapper}>
-											<SubtitleFileUpload user={user} currentMovie={currentMovie} />
-											{wordFail.length ? (
-												wordFail[0].alertType === 'newWord' ? (
-													<AlertBar message={wordFail[0].msg} type='error' />
-												) : null
-											) : null}
-											{currentMovie.title && !loadingWords ? (
-												<form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
-													<div className={styles.form}>
-														<TextField
-															className='MuiFilledInput-input MuiInputBase-input MuiInputLabel-root search-text-field'
-															variant='filled'
-															color='primary'
-															value={searchWord}
-															label='Add a word'
-															onChange={e => handleChange(e)}
-														></TextField>
-													</div>
-													<div className={styles.form}>
-														<Button
-															variant='contained'
-															color='primary'
-															onClick={e => handleSubmit(e)}
-															className='search-button'
-														>
-															Submit
-														</Button>
-													</div>
-													<br />
-												</form>
-											) : null}
-											<WordResults movieId={currentMovie.movieId} />
-										</div>
-									</Fragment>
+				<div
+					className='imageWrapper'
+					style={{
+						backgroundImage: currentMovieImage ? 'url(' + `${currentMovieImage}` + ')' : 'dimgrey',
+						backgroundSize: currentMovieImage ? 'cover' : 'unset',
+						backgroundAttachment: currentMovieImage ? 'fixed' : 'unset',
+						width: '100%',
+						minHeight: '100vh',
+					}}
+				>
+					<NavBar />
+					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
+						{currentMovie ? (
+							<Fragment>
+								{currentMovie.title && currentMovie.original_title ? (
+									<Typography variant='h3' className='titleHeading'>
+										<Link href='/movies/[movieId]' as={`/movies/${currentMovie.movieId}/`}>
+											<a className='titleAnchor'>{currentMovie.original_title}</a>
+										</Link>
+									</Typography>
 								) : (
-									<div style={{ textAlign: 'center', margin: '20vh 40vw' }}>
-										<BouncingBallLoader message='movie details...' variant='indigoHUE' />
+									<div style={{ textAlign: 'center', margin: '20px 0px' }}>
+										<BouncingBallLoader message='movie title details...' variant='indigoHUE' />
 									</div>
 								)}
+								<div className={styles.wrapper}>
+									<SubtitleFileUpload user={user} currentMovie={currentMovie} />
+									{wordFail.length ? (
+										wordFail[0].alertType === 'newWord' ? (
+											<AlertBar message={wordFail[0].msg} type='error' />
+										) : null
+									) : null}
+									{currentMovie.title && !loadingWords ? (
+										<form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
+											<div className={styles.form}>
+												<TextField
+													className='MuiFilledInput-input MuiInputBase-input MuiInputLabel-root search-text-field'
+													variant='filled'
+													color='primary'
+													value={searchWord}
+													label='Add a word'
+													onChange={e => handleChange(e)}
+												></TextField>
+											</div>
+											<div className={styles.form}>
+												<Button variant='contained' color='primary' onClick={e => handleSubmit(e)} className='search-button'>
+													Submit
+												</Button>
+											</div>
+											<br />
+										</form>
+									) : null}
+									<WordResults movieId={currentMovie.movieId} />
+								</div>
+							</Fragment>
+						) : (
+							<div style={{ textAlign: 'center', margin: '20vh 40vw' }}>
+								<BouncingBallLoader message='movie details...' variant='indigoHUE' />
 							</div>
-						</div>
+						)}
 					</div>
-					{currentMovieImage ? (
-						<img src={currentMovieImage} alt='movieImage' />
-					) : (
-						<div style={{ background: 'dimgrey', height: '100vh', textAlign: 'center' }}>Failed to load image wallpaper</div>
-					)}
 				</div>
 			) : (
 				<div style={{ margin: '40vh 40vw 0 40vw' }}>

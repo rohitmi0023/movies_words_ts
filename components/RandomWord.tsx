@@ -114,7 +114,7 @@ const RandomWord = () => {
 	}, []);
 
 	return (
-		<div className={styles.container}>
+		<div className={styles.container} style={{ minHeight: 'auto' }}>
 			{randomWord.length ? (
 				<Fragment>
 					<div className={styles.pagination}>
@@ -126,7 +126,7 @@ const RandomWord = () => {
 					<div className={styles.gridWrapper}>
 						{randomWord.map((each, index) => {
 							return (
-								<motion.div key={uuidv4()} className={styles.wrapper}>
+								<div key={uuidv4()} className={styles.wrapper}>
 									{each.word && index + 1 <= page ? (
 										<Fragment>
 											<div className={styles.imgContent}>
@@ -202,7 +202,7 @@ const RandomWord = () => {
 											<CircularProgress />
 										</div>
 									)}
-								</motion.div>
+								</div>
 							);
 						})}
 					</div>

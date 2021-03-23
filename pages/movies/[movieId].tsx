@@ -93,7 +93,7 @@ const Movies = () => {
 			try {
 				const movieId = window.location.pathname.replace('/movies/', '');
 				const res = await axios.get(
-					`https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&append_to_response=videos,images&include_image_language=en,null`
+					`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&append_to_response=videos,images&include_image_language=en,null`
 				);
 				setMovieDetailsState(res.data);
 			} catch (err) {

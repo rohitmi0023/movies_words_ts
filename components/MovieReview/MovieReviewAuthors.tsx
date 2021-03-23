@@ -30,11 +30,8 @@ const MovieReviewAuthors = () => {
 	useEffect(() => {
 		let mounted = true;
 		const movieId = window.location.pathname.replace('/movies/', '');
-		Axios.get(
-			`https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&page=1`
-		)
+		Axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&page=1`)
 			.then(res => {
-				console.log(res);
 				if (mounted) {
 					setAuthorReviewState(res.data);
 				}

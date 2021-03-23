@@ -20,22 +20,25 @@ const randomWord = ({ movieImages, randomNumberFunction, movieImagesLoading, ran
 	}, []);
 
 	return (
-		<div>
+		<div style={{ position: 'relative' }}>
 			<NavBar />
 			{!movieImagesLoading ? (
-				<div className='imageWrapper'>
-					<div className='contentWrapper'>
-						<div>
-							<div style={{ marginTop: '15vh' }}>
-								<RandomWord />
-							</div>
-						</div>
+				<div
+					className='imageWrapper'
+					style={{
+						backgroundImage:
+							movieImages.length === 10
+								? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+								: 'dimgrey',
+						backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
+						backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',
+						width: '100%',
+					}}
+				>
+					<NavBar />
+					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
+						<RandomWord />
 					</div>
-					{movieImages.length === 10 ? (
-						<img src={`https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}`} alt='movieImages' />
-					) : (
-						<div style={{ background: 'dimgrey', height: '100vh', textAlign: 'center' }}>Failed to load image wallpaper</div>
-					)}
 				</div>
 			) : (
 				<div style={{ margin: '40vh 40vw 0 40vw' }}>

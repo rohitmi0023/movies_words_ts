@@ -33,17 +33,10 @@ export default async (req, res) => {
 								if (match) {
 									// password is correct
 									// create token and send userId as payload
-									jwt.sign(
-										{
-											userId: results[0].id,
-										},
-										process.env.JWT_SECRET,
-										{ expiresIn: '10000h' },
-										(err, token) => {
-											if (err) throw err;
-											return res.status(200).send({ jwtToken: token });
-										}
-									);
+									jwt.sign({ userId: results[0].id }, process.env.JWT_SECRET, { expiresIn: '10000h' }, (err, token) => {
+										if (err) throw err;
+										return res.status(200).send({ jwtToken: token });
+									});
 								} else {
 									// Incorrect password
 									return res.status(400).json({

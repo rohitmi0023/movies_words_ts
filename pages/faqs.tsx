@@ -20,42 +20,54 @@ const faqs = ({ randomImagesAddition, randomNumberFunction, movieImagesLoading, 
 	}, []);
 
 	return (
-		<div>
+		<div style={{ position: 'relative' }}>
 			<NavBar />
 			{!movieImagesLoading ? (
-				<div className='imageWrapper'>
-					<div style={{ position: 'absolute', marginTop: '15vh', color: 'white', zIndex: 1 }}>
+				<div
+					className='imageWrapper'
+					style={{
+						backgroundImage:
+							movieImages.length === 10
+								? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+								: 'dimgrey',
+						backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
+						backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',
+						width: '100%',
+					}}
+				>
+					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
 						<Typography variant='h2' style={{ textAlign: 'center' }}>
-							FAQs / Help
+							FAQs
 						</Typography>
 						<div style={{ margin: '10px 40px' }}>
 							<Typography variant='h4'>What this website is all about?</Typography>
-							<Typography variant='h6' style={{ marginLeft: '20px' }}>
-								Basically, it stores the words that are used in movies. Once you understand the words meaning and then watch the
-								movie, that will help you in understanding how to use that word too.
+							<Typography variant='h6' style={{ marginLeft: '15px' }}>
+								Basically, it stores the "difficult" words that are used in movies. The purpose being that once you are able to get
+								yourself familiar with the hard to apprehend words and then watch the movie, you will enjoy the movie much more and
+								simultaneously drastically enhancing your English.
 							</Typography>
 							<br />
-							<Typography variant='h4'>How can I store words?</Typography>
+							<Typography variant='h4'>How do I store words?</Typography>
 							<Typography variant='h6' style={{ marginLeft: '20px' }}>
-								So, there are <b>two</b> ways of doing it till now :-
+								So, for that there are <b>two</b> ways of doing it :-
 								<br />
 								<ol type='A'>
 									<li>
-										First one is manually adding the word. For example, if you discover <b>fugitive</b> word in the movie{' '}
-										<b>Predestination</b>. Then,
+										Manual addition. For example, while watching the movie <b>Predestination</b> you discover <b>fugitive</b> word
+										in the movie and want to save it here. Then,
 										<ul>
 											<li>
 												Search for <b>Predestination</b> movie in the homepage.
 											</li>
-											<li>Click on the desired movie poster. You will be redirected to a new page.</li>
+											<li>Click on the desired movie poster. You will now be redirected to the movie page.</li>
 											<li>
-												Add the word <b>fugitive</b> in the <i>add new word</i> input form.
+												Type <b>fugitive</b> in the <i>Add new word</i> input form and click submit button.
 											</li>
 											<li>That's it, your word is saved.</li>
 										</ul>
 									</li>
 									<li>
-										Second one is by using the movie subtitles to extract few of the uncommon words.
+										Second one is by uploading the respective movie subtitles and then extract the "difficult" words from it.
 										<ul>
 											<li> The first two steps remains the same as above.</li>
 											<li>Now you have to upload the movie subitle there.</li>
@@ -69,28 +81,22 @@ const faqs = ({ randomImagesAddition, randomNumberFunction, movieImagesLoading, 
 							</Typography>
 							<br />
 							<Typography variant='h4'>What makes this website different from a note app?</Typography>
-							<Typography variant='h6' style={{ marginLeft: '20px' }}>
+							<Typography variant='h6' style={{ marginLeft: '20px', marginBottom: '5vh' }}>
 								There are few things that makes it more useful than notes app till now:-
 								<ul>
 									<li>The extracted words from the subtitle is a great feauture that is unique.</li>
 									<li>
 										You can see the words added by other people that makes your work much lesser i.e. you don't have to add all of
-										them all by yourself.
+										them by yourself.
 									</li>
 									<li>
-										We will give you randomly the most popular words and other facts/information about words/movies in general.
+										We will randomly give you the most popular words and other facts/information about words/movies in general.
 									</li>
 									<li>Your words are saved in our secured cloud database that will enusure that your data will not be lost.</li>
-									<li>We will update/enhace this website regularly.</li>
 								</ul>
 							</Typography>
 						</div>
 					</div>
-					{movieImages.length === 10 ? (
-						<img src={`https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}`} alt='movieImages' />
-					) : (
-						<div style={{ background: 'dimgrey', height: '100vh', textAlign: 'center' }}>Failed to load image wallpaper</div>
-					)}
 				</div>
 			) : (
 				<div style={{ margin: '40vh 40vw 0 40vw' }}>

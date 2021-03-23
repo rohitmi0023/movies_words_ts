@@ -34,7 +34,7 @@ const MovieWatchProviders = () => {
 			try {
 				const movieId = window.location.pathname.replace('/movies/', '');
 				const resWatchProvider = await Axios.get(
-					`https://cors-anywhere.herokuapp.com/https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}`
+					`https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}`
 				);
 				if (resWatchProvider.data.results) {
 					if (resWatchProvider.data.results.IN) {
