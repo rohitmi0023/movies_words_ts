@@ -53,7 +53,7 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 			const res = await Axios.get(`/api/movies/${currentMovie.movieId}/subtitles?user=${user.id}`);
 			const { url, fields } = res.data;
 			console.log(res.data);
-			const newUrl = `http://${url.split('/')[3]}.s3.amazonaws.com`;
+			const newUrl = `https://${url.split('/')[3]}.s3.amazonaws.com`;
 			console.log(url.split('/')[3]);
 			// const newUrl = url;
 			console.log(newUrl);
