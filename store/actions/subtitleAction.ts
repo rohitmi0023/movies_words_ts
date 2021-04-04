@@ -5,9 +5,15 @@ import _ from 'lodash';
 
 export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch => {
 	if (localStorage.jwtToken) {
-		Axios.defaults.headers.common['auth-header-token'] = localStorage.jwtToken;
-	} else {
-		delete Axios.defaults.headers.common['auth-header-token'];
+		Axios.interceptors.request.use(function (config) {
+			if (typeof config.headers['auth-header-token'] === 'undefined') {
+				// add auth-header-token header only if url begins with "/api/" or is on same domain
+				if (config.url.substring(0, 5) === '/api/' || config.url.indexOf(window.location.hostname) !== -1) {
+					config.headers['auth-header-token'] = localStorage.jwtToken;
+				}
+			}
+			return config;
+		});
 	}
 	if (user) {
 		//User is logged in
@@ -27,6 +33,7 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 			};
 			// checking if user with this movie had already uploaded file from the database
 			const resDBGET = await Axios.get(`/api/movies/${currentMovie.movieId}/subtitles/db?user=${user.id}`);
+			// console.log(resDBGET);
 			if (resDBGET.data.result) {
 				// File already exists
 				const r = confirm('Want to overwrite the existing file for this movie?');
@@ -45,13 +52,13 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 			// Adding new file by presigned method
 			const res = await Axios.get(`/api/movies/${currentMovie.movieId}/subtitles?user=${user.id}`);
 			const { url, fields } = res.data;
-			const newUrl = `https://${url.split('/')[3]}.s3.amazonaws.com`;
+			console.log(res.data);
+			const newUrl = `http://${url.split('/')[3]}.s3.amazonaws.com`;
+			console.log(url.split('/')[3]);
+			// const newUrl = url;
+			console.log(newUrl);
 			const formData = new FormData();
-			console.log(`formData`);
-			console.log(formData);
-			console.log(file);
 			const formArray = Object.entries({ ...fields, file: blob });
-			console.log(formArray);
 			formArray.forEach(([key, value]) => formData.append(key, value as any));
 			// Uploading file to AWS
 			await Axios({

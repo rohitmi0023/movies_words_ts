@@ -10,7 +10,7 @@ const MovieReviewRating = ({ movieDetailsState }) => {
 		let mounted = true;
 		const movieReviewRatingFunction = async () => {
 			try {
-				const res = await Axios.get(`http://www.omdbapi.com/?i=${movieDetailsState.imdb_id}&type=movie&apikey=${process.env.OMDB_KEY}`);
+				const res = await Axios.get(`https://www.omdbapi.com/?i=${movieDetailsState.imdb_id}&type=movie&apikey=${process.env.OMDB_KEY}`);
 				if (mounted) {
 					setOmdbRating(res.data);
 				}

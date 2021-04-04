@@ -12,11 +12,11 @@ import styles from '../styles/RandomWord.module.css';
 import { Pagination } from '@material-ui/lab';
 import BouncingBallLoader from './BouncingBallLoader';
 import clsx from 'clsx';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 
 const RandomWord = () => {
 	var client = Owlbot(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
-	const [numberWords, setNumberWords] = useState(2);
+	// const [numberWords, setNumberWords] = useState(2);
 	const [page, setPage] = React.useState(1);
 	const [randomWord, setRandomWord] = useState([
 		// {
@@ -52,10 +52,10 @@ const RandomWord = () => {
 			try {
 				setRandomWord([]);
 				const res = await Axios.get('/api/home');
-				res.data.forEach((each: { word: any; title: any; added_by: any; upvotes: any; poster_path: any }) => {
+				res.data.forEach(each => {
 					client
 						.define(each.word)
-						.then((resDef: { definitions: any }) => {
+						.then(resDef => {
 							setRandomWord(prevArray => [
 								...prevArray,
 								{
@@ -114,7 +114,7 @@ const RandomWord = () => {
 	}, []);
 
 	return (
-		<div className={styles.container} style={{ minHeight: 'auto' }}>
+		<div className={styles.container} style={{ minHeight: '100vh' }}>
 			{randomWord.length ? (
 				<Fragment>
 					<div className={styles.pagination}>

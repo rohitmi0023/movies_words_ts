@@ -84,7 +84,7 @@ const faqs = ({ randomImagesAddition, randomNumberFunction, movieImagesLoading, 
 							<Typography variant='h6' style={{ marginLeft: '20px', marginBottom: '5vh' }}>
 								There are few things that makes it more useful than notes app till now:-
 								<ul>
-									<li>The extracted words from the subtitle is a great feauture that is unique.</li>
+									<li>The extracted words from the subtitle is a great feature that is unique.</li>
 									<li>
 										You can see the words added by other people that makes your work much lesser i.e. you don't have to add all of
 										them by yourself.

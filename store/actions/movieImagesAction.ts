@@ -1,12 +1,12 @@
 import * as types from '../types';
 import axios from 'axios';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 export const randomImagesAddition = () => async dispatch => {
 	try {
-		if (localStorage.jwtToken) {
-			delete Axios.defaults.headers.common['auth-header-token'];
-		}
+		// if (localStorage.jwtToken) {
+		// 	delete Axios.defaults.headers.common['auth-header-token'];
+		// }
 		const urlForMovie = await axios.get(
 			`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&include_adult=false&page=1`
 		);
