@@ -33,7 +33,9 @@ export default async function handler(req, res) {
 					.split(' ')
 					.filter(each => each.length > 5)
 					.filter(each => words.check(each))
+					.slice(0, 50)
 			);
+			// subtitleWords.slice(0, 50);
 			const parmaWords = {
 				Bucket: process.env.AWS_BUCKET_NAME,
 				Key: `Words.xlsx`,
@@ -50,7 +52,10 @@ export default async function handler(req, res) {
 						const res3Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 3 });
 						const res4Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 4 });
 						const res5Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 5 });
-						const totalSheets = _.concat(res1Sheet, res2Sheet, res3Sheet, res4Sheet, res5Sheet);
+						const totalSheets = _.concat(
+							res1Sheet
+							// res2Sheet, res3Sheet, res4Sheet, res5Sheet
+						);
 						const dataSheetWords = totalSheets
 							.map(each =>
 								each.filter(each2 => {
@@ -79,6 +84,7 @@ export default async function handler(req, res) {
 						// console.log(response);
 						return res.status(200).send({
 							response: unMatchedWords,
+							words: subtitleWords,
 						});
 					} catch (err) {
 						console.log(err);

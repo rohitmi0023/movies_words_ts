@@ -11,7 +11,6 @@ const subtitlesState = {
 export const subtitleReducer = (state = subtitlesState, action) => {
 	switch (action.type) {
 		case types.SUBTITLES_WORD_ADD:
-			console.log(action.payload);
 			return {
 				...state,
 				subtitleWords: action.payload.data,
