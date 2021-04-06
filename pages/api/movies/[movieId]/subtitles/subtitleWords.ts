@@ -15,6 +15,8 @@ export default async function handler(req, res) {
 		signatureVersion: 'v4',
 	});
 	const s3 = new aws.S3();
+	console.log(process.env.AWS_BUCKET_NAME);
+	console.log(req.body.key);
 	var params = {
 		Bucket: process.env.AWS_BUCKET_NAME,
 		Key: req.body.key,
@@ -22,7 +24,7 @@ export default async function handler(req, res) {
 	s3.getObject(params, async function (err, data) {
 		if (err) {
 			console.log(err, err.stack);
-			return res.status(500).json({ message: 'Unable to fetch uploaded subtitle!', type: 'extractSubtitle' });
+			return res.status(500).json({ message: 'Unable to fetch uploaded subtitle!', type: 'extractSubtitle', key: req.body.key });
 		} else {
 			let subtitleWords = _.uniq(
 				data.Body.toString()
