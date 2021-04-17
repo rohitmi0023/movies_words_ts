@@ -78,6 +78,9 @@ handler.get<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 			(err: any, results: string | any[]) => {
 				if (err) throw err;
 				if (results.length) {
+					console.log(results);
+					console.log(results[0]);
+					console.log(results[0].name);
 					return res.status(200).send({ key: results[0].name, result: true });
 				} else {
 					return res.status(200).send({ key: '', result: false });
