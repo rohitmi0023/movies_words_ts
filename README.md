@@ -8,7 +8,10 @@ Hey folks, this website is for ones who watch English movies and want to improve
 **Search Movies result**
 ![search movies result](search-result-movies-words-ts.vercel.app.png 'Search Movies result')
 
-**FAQ(s) page**:
+**Movie Details Page**:
+![Movie details](movie-details-movies-words-ts.vercel.app_movies.png 'movie details page')
+
+**FAQ(s) Page**:
 ![FAQ(s) page](<FAQ(s)-movies-words-ts.vercel.app.png> 'FAQ(s) page')
 
 ### Core Tech Used
