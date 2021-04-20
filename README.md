@@ -27,6 +27,15 @@ Hey folks, this website is for ones who watch English movies and want to improve
 
 ### Feature that's currently not working in live website
 
+Once you upload your subtitle and click on the extract button underneath it, we generate some of the "difficult" or "infrequent" words from the subtitle file as shown below thus making your work easier to add the words.
+
+Criteria for the word to be "difficult" or "infrequent":-
+
+-   Word length should be more than 5
+-   Should return true from [check-word](https://www.npmjs.com/package/check-word) npm package
+-   Should not be profane word from [bad-words](https://www.npmjs.com/package/bad-words) npm package
+-   Should not match with the words in our excel database.
+
 [Reason for the failure](https://vercel.com/docs/platform/limits#general-limits) - Serverless Function Execution Timeout (Seconds) - 10(Hobby plan)
 
 ![](extract_subtitle.gif)

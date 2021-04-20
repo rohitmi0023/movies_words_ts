@@ -35,7 +35,6 @@ export default async function handler(req, res) {
 					.split(' ')
 					.filter(each => each.length > 5)
 					.filter(each => words.check(each))
-					.slice(0, 50)
 			);
 			// subtitleWords.slice(0, 50);
 			const parmaWords = {
