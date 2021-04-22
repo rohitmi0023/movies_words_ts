@@ -15,8 +15,6 @@ export default async function handler(req, res) {
 		signatureVersion: 'v4',
 	});
 	const s3 = new aws.S3();
-	console.log(process.env.AWS_BUCKET_NAME);
-	console.log(req.body.key);
 	var params = {
 		Bucket: process.env.AWS_BUCKET_NAME,
 		Key: req.body.key,
@@ -48,15 +46,12 @@ export default async function handler(req, res) {
 				} else {
 					try {
 						console.log(`Came above readXlsxFile`);
-						const res1Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 1 });
-						const res2Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 2 });
-						const res3Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 3 });
-						const res4Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 4 });
-						const res5Sheet = await readXlsxFile('./excel/Words.xlsx', { sheet: 5 });
-						const totalSheets = _.concat(
-							res1Sheet
-							// res2Sheet, res3Sheet, res4Sheet, res5Sheet
-						);
+						const res1Sheet = await readXlsxFile('./Words.xlsx', { sheet: 1 });
+						const res2Sheet = await readXlsxFile('./Words.xlsx', { sheet: 2 });
+						const res3Sheet = await readXlsxFile('./Words.xlsx', { sheet: 3 });
+						const res4Sheet = await readXlsxFile('./Words.xlsx', { sheet: 4 });
+						const res5Sheet = await readXlsxFile('./Words.xlsx', { sheet: 5 });
+						const totalSheets = _.concat(res1Sheet, res2Sheet, res3Sheet, res4Sheet, res5Sheet);
 						const dataSheetWords = totalSheets
 							.map(each =>
 								each.filter(each2 => {

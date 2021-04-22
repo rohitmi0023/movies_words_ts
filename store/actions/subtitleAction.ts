@@ -102,6 +102,7 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 };
 
 export const extractSubtitleAction = ({ currentMovie, user }) => async dispatch => {
+	// dispatching empty data so that if previous data is present it disappears
 	dispatch({
 		type: types.SUBTITLES_WORD_ADD,
 		payload: { data: [], movieId: currentMovie.movieId },
