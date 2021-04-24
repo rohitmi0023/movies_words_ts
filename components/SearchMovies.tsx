@@ -59,7 +59,13 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 			loading: true,
 		});
 		setSearchFormData(e.target.value);
-		const urlForSearch = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
+		let urlForSearch;
+		if (window.origin[4] == 's') {
+			urlForSearch = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
+		} else {
+			urlForSearch = `http://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
+		}
+
 		if (e.target.value) {
 			try {
 				if (typeof cancelToken !== typeof undefined) {
@@ -158,7 +164,9 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 						style={{
 							backgroundImage:
 								movieImages.length === 10
-									? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+									? window.origin === 's'
+										? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+										: 'url(' + `http://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
 									: 'dimgrey',
 							backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
 							backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',

@@ -1,11 +1,11 @@
 // sending the uploaded subtitle file
 import aws from 'aws-sdk';
 import _ from 'lodash';
-const readXlsxFile = require('read-excel-file/node');
 var checkWord = require('check-word'),
 	words = checkWord('en');
 var Filter = require('bad-words'),
 	badWordsFilter = new Filter();
+import xlsx from 'node-xlsx';
 
 export default async function handler(req, res) {
 	aws.config.update({
@@ -34,52 +34,100 @@ export default async function handler(req, res) {
 					.filter(each => each.length > 5)
 					.filter(each => words.check(each))
 			);
-			// subtitleWords.slice(0, 50);
-			const parmaWords = {
+			const paramWords = {
 				Bucket: process.env.AWS_BUCKET_NAME,
 				Key: `Words.xlsx`,
 			};
-			s3.getObject(parmaWords, async function (err, data) {
+
+			s3.getObject(paramWords, async function (err, data) {
 				if (err) {
 					console.log(err, err.stack);
 					return res.status(500).json({ message: 'Unable to fetch uploaded subtitle!!', type: 'extractSubtitle' });
 				} else {
 					try {
-						console.log(`Came above readXlsxFile`);
-						const res1Sheet = await readXlsxFile('./Words.xlsx', { sheet: 1 });
-						const res2Sheet = await readXlsxFile('./Words.xlsx', { sheet: 2 });
-						const res3Sheet = await readXlsxFile('./Words.xlsx', { sheet: 3 });
-						const res4Sheet = await readXlsxFile('./Words.xlsx', { sheet: 4 });
-						const res5Sheet = await readXlsxFile('./Words.xlsx', { sheet: 5 });
-						const totalSheets = _.concat(res1Sheet, res2Sheet, res3Sheet, res4Sheet, res5Sheet);
-						const dataSheetWords = totalSheets
-							.map(each =>
-								each.filter(each2 => {
-									if (each2 != null) {
-										if (each2.length > 5) {
-											return true;
+						const totalSheets = xlsx.parse(data.Body);
+						const dataSheetWords = totalSheets.map(each => {
+							return each.data
+								.map(each2 => {
+									return each2.filter(each3 => {
+										if (each3 != null) {
+											if (each3.length > 5) {
+												return true;
+											} else {
+												return false;
+											}
 										} else {
 											return false;
 										}
-									} else {
-										return false;
-									}
+									});
 								})
-							)
-							.filter(each => each.length);
-						let unMatchedWords = subtitleWords.map(eachWord =>
-							dataSheetWords.map(each => each.indexOf(eachWord)).filter(each => each !== -1)
+								.filter(each => each.length);
+						});
+						// console.log(dataSheetWords);
+						// unmatched words will have empty array in unMatchedWords array list
+						let unMatchedWords;
+						// sheet 1
+						unMatchedWords = subtitleWords.map(eachWord =>
+							dataSheetWords[0].map(each => each.indexOf(eachWord)).filter(each => each !== -1)
 						);
-						unMatchedWords = subtitleWords.filter((each, index) => {
-							if (!unMatchedWords[index].length && !badWordsFilter.isProfane(each)) {
-								return true;
+						// here unmatched words will contain words of that which were having null array item earlier
+						subtitleWords = subtitleWords.filter((each, index) => {
+							if (!unMatchedWords[index].length) {
+								if (!badWordsFilter.isProfane(each)) return true;
 							} else {
 								return false;
 							}
 						});
-						// console.log(response);
+						// sheet 2
+						unMatchedWords = subtitleWords.map(eachWord =>
+							dataSheetWords[1].map(each => each.indexOf(eachWord)).filter(each => each !== -1)
+						);
+						// here unmatched words will contain words of that which were having null array item earlier
+						subtitleWords = subtitleWords.filter((each, index) => {
+							if (!unMatchedWords[index].length) {
+								if (!badWordsFilter.isProfane(each)) return true;
+							} else {
+								return false;
+							}
+						});
+						// sheet 3
+						unMatchedWords = subtitleWords.map(eachWord =>
+							dataSheetWords[2].map(each => each.indexOf(eachWord)).filter(each => each !== -1)
+						);
+						// here unmatched words will contain words of that which were having null array item earlier
+						subtitleWords = subtitleWords.filter((each, index) => {
+							if (!unMatchedWords[index].length) {
+								if (!badWordsFilter.isProfane(each)) return true;
+							} else {
+								return false;
+							}
+						});
+						// sheet 4
+						unMatchedWords = subtitleWords.map(eachWord =>
+							dataSheetWords[3].map(each => each.indexOf(eachWord)).filter(each => each !== -1)
+						);
+						// here unmatched words will contain words of that which were having null array item earlier
+						subtitleWords = subtitleWords.filter((each, index) => {
+							if (!unMatchedWords[index].length) {
+								if (!badWordsFilter.isProfane(each)) return true;
+							} else {
+								return false;
+							}
+						});
+						// sheet 5
+						unMatchedWords = subtitleWords.map(eachWord =>
+							dataSheetWords[4].map(each => each.indexOf(eachWord)).filter(each => each !== -1)
+						);
+						// here unmatched words will contain words of that which were having null array item earlier
+						subtitleWords = subtitleWords.filter((each, index) => {
+							if (!unMatchedWords[index].length) {
+								if (!badWordsFilter.isProfane(each)) return true;
+							} else {
+								return false;
+							}
+						});
 						return res.status(200).send({
-							response: unMatchedWords,
+							response: subtitleWords,
 							words: subtitleWords,
 						});
 					} catch (err) {

@@ -32,7 +32,11 @@ const SearchResult = ({ searchresult, currentMoviePoster }) => {
 							</div>
 							<div className={styles.imgContent}>
 								<img
-									src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+									src={
+										window.origin[4] == 's'
+											? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+											: `http://image.tmdb.org/t/p/original${movie.poster_path}`
+									}
 									className={styles.moviePoster}
 									alt='Movie poster'
 								/>

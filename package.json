@@ -43,6 +43,7 @@
 		"next": "^10.0.3",
 		"next-connect": "^0.8.1",
 		"next-redux-wrapper": "^6.0.2",
+		"node-xlsx": "^0.16.1",
 		"owlbot-js": "^2.0.0",
 		"randomcolor": "^0.6.2",
 		"react": "16.13.1",
