@@ -7,18 +7,9 @@ export const randomImagesAddition = () => async dispatch => {
 		// if (localStorage.jwtToken) {
 		// 	delete Axios.defaults.headers.common['auth-header-token'];
 		// }
-		let urlForMovie;
-		if (window.origin[4] == 's') {
-			// in production mode
-			urlForMovie = await axios.get(
-				`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&include_adult=false&page=1`
-			);
-		} else {
-			// dev mode
-			urlForMovie = await axios.get(
-				`http://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&include_adult=false&page=1`
-			);
-		}
+		let urlForMovie = await axios.get(
+			`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&include_adult=false&page=1`
+		);
 		if (urlForMovie.data.results.length) {
 			const imagesArray = urlForMovie.data.results.slice(0, 10).map((each, index) => {
 				if (index >= 10) {

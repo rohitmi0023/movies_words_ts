@@ -1,1 +1,0 @@
-SELECT * FROM `movies_words`.`users` LIMIT 1000;

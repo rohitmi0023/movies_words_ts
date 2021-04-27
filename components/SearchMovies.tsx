@@ -159,9 +159,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 						style={{
 							backgroundImage:
 								movieImages.length === 10
-									? window.origin === 's'
-										? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
-										: 'url(' + `http://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+									? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
 									: 'dimgrey',
 							backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
 							backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',

@@ -1,18 +1,20 @@
 # movies_words
 
+#### Everything's currently working on heroku. [Click here](https://movies-words.herokuapp.com/)
+
 Hey folks, this website is for ones who watch English movies and want to improve their vocabulary. Visit the website and check out the FAQ(s) page to know how to use this website.
 
 **Home page**:
-![Home page](home-movies-words-ts.vercel.app.png 'Home page')
+![Home page](public/home-movies-words-ts.vercel.app.png 'Home page')
 
 **Search Movies result**
-![search movies result](search-result-movies-words-ts.vercel.app.png 'Search Movies result')
+![search movies result](public/search-result-movies-words-ts.vercel.app.png 'Search Movies result')
 
 **Movie Details Page**:
-![Movie details](movie-details-movies-words-ts.vercel.app_movies.png 'movie details page')
+![Movie details](public/movie-details-movies-words-ts.vercel.app_movies.png 'movie details page')
 
 **FAQ(s) Page**:
-![FAQ(s) page](<FAQ(s)-movies-words-ts.vercel.app.png> 'FAQ(s) page')
+![FAQ(s) page](<public/FAQ(s)-movies-words-ts.vercel.app.png> 'FAQ(s) page')
 
 ### Core Tech Used
 
@@ -38,4 +40,4 @@ Criteria for the word to be "difficult" or "infrequent":-
 
 [Reason for the failure](https://vercel.com/docs/platform/limits#general-limits) - Serverless Function Execution Timeout (Seconds) - 10(Hobby plan)
 
-![](extract_subtitle.gif)
+![](public/extract_subtitle.gif)
