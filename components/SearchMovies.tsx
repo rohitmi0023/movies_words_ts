@@ -60,12 +60,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 		});
 		setSearchFormData(e.target.value);
 		let urlForSearch;
-		if (window.origin[4] == 's') {
-			urlForSearch = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
-		} else {
-			urlForSearch = `http://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
-		}
-
+		urlForSearch = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_THEMOVIEDB_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`;
 		if (e.target.value) {
 			try {
 				if (typeof cancelToken !== typeof undefined) {

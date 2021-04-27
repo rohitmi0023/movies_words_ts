@@ -19,24 +19,3 @@ const Home = () => {
 };
 
 export default Home;
-
-{
-	/* <Link href='/faqs'> */
-}
-{
-	/* <Fab
-					style={{ float: 'right', marginRight: '20px', backgroundColor: 'dimgrey' }}
-					variant='extended'
-				> */
-}
-{
-	/* <a style={{ textDecoration: 'none', letterSpacing: '1.5px', color: 'white' }}>
-					FAQs / Help
-				</a> */
-}
-{
-	/* </Fab> */
-}
-{
-	/* </Link> */
-}

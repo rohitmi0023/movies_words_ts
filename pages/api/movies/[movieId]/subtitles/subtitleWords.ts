@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 				Bucket: process.env.AWS_BUCKET_NAME,
 				Key: `Words.xlsx`,
 			};
-
+			const start = Date.now();
 			s3.getObject(paramWords, async function (err, data) {
 				if (err) {
 					console.log(err, err.stack);
@@ -137,6 +137,8 @@ export default async function handler(req, res) {
 					}
 				}
 			});
+			console.log(`time taken`);
+			console.log(Date.now() - start);
 		}
 	});
 }
