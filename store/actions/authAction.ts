@@ -35,6 +35,7 @@ export const loadUser = () => async dispatch => {
 			type: types.AUTH_ERROR,
 		});
 		console.log(err);
+		console.log(err.message);
 	}
 };
 
@@ -100,6 +101,9 @@ export const login = ({ email, password }) => async dispatch => {
 		});
 		dispatch(loadUser());
 	} catch (err) {
+		console.log(err);
+		console.log(err.message);
+		console.log(err.response);
 		if (err.response.data.errors) {
 			const errors = err.response.data.errors;
 			if (errors) {

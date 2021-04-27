@@ -19,11 +19,13 @@ export default async (req, res) => {
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ errors: errors.array() });
 		}
+		console.log(`line 22, login.ts, came below express validators`);
 		const { email, password } = req.body;
 		try {
 			connection.query('SELECT id, email, password, is_Verified from users WHERE email = ?', email, async (err, results) => {
 				if (err) throw err;
 				try {
+					console.log(`post sql err`);
 					if (results.length) {
 						// Email is present
 						try {
