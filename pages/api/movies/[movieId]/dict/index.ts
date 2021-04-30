@@ -139,6 +139,7 @@ handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		adult = true ? 1 : 0;
 		video = true ? 1 : 0;
 		var client = Owlbot(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
+		console.log(client);
 		await client.define(word); //for checking legit english words
 		console.log(`below owlbot check`);
 		const profanity = filter.isProfane(word); //returns true if word is profane
@@ -207,7 +208,7 @@ handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		);
 	} catch (err) {
 		console.log(`above error message`);
-		console.log(err.response);
+		console.log(err.response.data);
 		console.log(err.message);
 		if (err.response) {
 			if (err.response.data) {
