@@ -139,9 +139,11 @@ handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		adult = true ? 1 : 0;
 		video = true ? 1 : 0;
 		var client = Owlbot(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
-		console.log(client);
-		await client.define(word); //for checking legit english words
+		console.log(`process.env.NEXT_PUBLIC_OWLBOT_API_KEY`);
+		console.log(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
+		const resOwlbot = await client.define(word); //for checking legit english words
 		console.log(`below owlbot check`);
+		console.log(resOwlbot);
 		const profanity = filter.isProfane(word); //returns true if word is profane
 		console.log(`below profanity check`);
 		let data = {
