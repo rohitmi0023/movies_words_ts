@@ -1,5 +1,5 @@
 -- Create db
-create database movies_words;
+-- create database movies_words;
 
 -- Movies title schema
 CREATE TABLE movies_details (

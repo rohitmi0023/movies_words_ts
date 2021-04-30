@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import Head from 'next/head';
 import Axios from 'axios';
 import WordResults from '../../../components/WordResults';
 import NavBar from '../../../components/NavBar';
@@ -187,7 +186,7 @@ const dictionary = ({ loadWords, wordFail, user, userVoting, loadingWords, newWo
 							</Fragment>
 						) : (
 							<div style={{ textAlign: 'center', margin: '20vh 40vw' }}>
-								<BouncingBallLoader message='movie details...' variant='indigoHUE' />
+								<BouncingBallLoader message='Loading movie details...' variant='indigoHUE' />
 							</div>
 						)}
 					</div>

@@ -112,6 +112,7 @@ const validateBody = initMiddleware(
 handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 	try {
 		await validateBody(req, res);
+		console.log(`below validate body`);
 		let {
 			movieId,
 			adult,
@@ -134,11 +135,14 @@ handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		} = req.body.currentMovie;
 		let userId = req.body.userId;
 		let word = req.body.word;
+		console.log(`below userId and word`);
 		adult = true ? 1 : 0;
 		video = true ? 1 : 0;
 		var client = Owlbot(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
 		await client.define(word); //for checking legit english words
+		console.log(`below owlbot check`);
 		const profanity = filter.isProfane(word); //returns true if word is profane
+		console.log(`below profanity check`);
 		let data = {
 			id: movieId,
 			adult,
@@ -169,6 +173,7 @@ handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 				});
 			}
 		});
+		console.log(`below movies_details query`);
 		// movies_word table
 		connection.query(
 			'SELECT word, movie_id from `movies_word` WHERE `word` = ? AND `movie_id` = ? ORDER BY upvotes DESC',
@@ -202,6 +207,7 @@ handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		);
 	} catch (err) {
 		console.log(`above error message`);
+		console.log(err.response);
 		console.log(err.message);
 		if (err.response) {
 			if (err.response.data) {
