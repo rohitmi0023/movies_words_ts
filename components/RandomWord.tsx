@@ -24,6 +24,7 @@ const RandomWord = () => {
 	};
 
 	const onClick = (each: { word: any }, id: number) => {
+		console.log(each.word);
 		const newArray = randomWord.map(eachWord => {
 			if (each.word === eachWord.word) {
 				eachWord.currentDef += id;
@@ -111,7 +112,7 @@ const RandomWord = () => {
 
 	return (
 		<div className={styles.container} style={{ minHeight: '100vh' }}>
-			{randomWord.length ? (
+			{randomWord.length == 2 ? (
 				<Fragment>
 					<div className={styles.pagination}>
 						<Typography gutterBottom className={styles.textCentre}>
