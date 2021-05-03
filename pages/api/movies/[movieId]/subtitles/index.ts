@@ -54,7 +54,7 @@ handler.get<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		Fields: {
 			key: fileName,
 		},
-		Expires: 10000000, // seconds
+		Expires: 10000, // seconds
 		Conditions: [
 			['content-length-range', 0, 1048576], // up to 1 MB
 		],

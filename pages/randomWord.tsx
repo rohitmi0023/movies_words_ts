@@ -35,7 +35,6 @@ const randomWord = ({ movieImages, randomNumberFunction, movieImagesLoading, ran
 						width: '100%',
 					}}
 				>
-					<NavBar />
 					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
 						<RandomWord />
 					</div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Axios from 'axios';
-var Owlbot = require('owlbot-js');
-import { Typography, Slider, Paper } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 const parse = require('html-react-parser');
@@ -12,26 +11,13 @@ import styles from '../styles/RandomWord.module.css';
 import { Pagination } from '@material-ui/lab';
 import BouncingBallLoader from './BouncingBallLoader';
 import clsx from 'clsx';
-// import { motion } from 'framer-motion';
+const ud = require('urban-dictionary');
+import _ from 'lodash';
+import Link from 'next/link';
 
 const RandomWord = () => {
-	var client = Owlbot(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
-	// const [numberWords, setNumberWords] = useState(2);
 	const [page, setPage] = React.useState(1);
-	const [randomWord, setRandomWord] = useState([
-		// {
-		// 	word: null,
-		// 	title: null,
-		// 	addedBy: null,
-		// 	upvotes: null,
-		// 	poster: null,
-		// 	definition: null,
-		// 	ResponseWord: null,
-		// 	ResponseDef: null,
-		// 	ResponseWordText: null,
-		// 	currentDef: 0,
-		// },
-	]);
+	const [randomWord, setRandomWord] = useState([]);
 
 	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
 		setPage(value);
@@ -53,27 +39,8 @@ const RandomWord = () => {
 				setRandomWord([]);
 				const res = await Axios.get('/api/home');
 				res.data.forEach(each => {
-					client
-						.define(each.word)
-						.then(resDef => {
-							setRandomWord(prevArray => [
-								...prevArray,
-								{
-									word: each.word,
-									title: each.title,
-									addedBy: each.added_by,
-									upvotes: each.upvotes,
-									poster: each.poster_path,
-									definition: resDef.definitions ? resDef.definitions : null,
-									ResponseWord: 200,
-									ResponseDef: resDef.definitions ? 200 : 500,
-									ResponseWordText: null,
-									currentDef: 0,
-								},
-							]);
-						})
-						.catch((err: any) => {
-							console.log(err);
+					ud.define(each.word, (error, results) => {
+						if (error) {
 							setRandomWord(prevArray => [
 								...prevArray,
 								{
@@ -89,7 +56,36 @@ const RandomWord = () => {
 									currentDef: 0,
 								},
 							]);
-						});
+						} else {
+							const array = _.reverse(
+								_.sortBy(
+									_.filter(results, function (o) {
+										return o.word.toLowerCase() === each.word;
+									}),
+									[
+										function (o) {
+											return o.thumbs_up - o.thumbs_down;
+										},
+									]
+								)
+							);
+							setRandomWord(prevArray => [
+								...prevArray,
+								{
+									word: each.word,
+									title: each.title,
+									addedBy: each.added_by,
+									upvotes: each.upvotes,
+									poster: each.poster_path,
+									definition: array ? array : null,
+									ResponseWord: 200,
+									ResponseDef: array ? 200 : 500,
+									ResponseWordText: null,
+									currentDef: 0,
+								},
+							]);
+						}
+					});
 				});
 			} catch (err) {
 				console.log(err);
@@ -161,18 +157,40 @@ const RandomWord = () => {
 																</Tooltip>
 															)}
 														</Typography>
-														<Typography variant='h6' className={clsx(styles.textCentre, styles.textCentre2)}>
-															<i>{each.definition[each.currentDef].type}</i>
-														</Typography>
+
 														<Typography variant='h5' className={clsx(styles.definitionText)}>
-															<b>Definition:</b> {parse(each.definition[each.currentDef].definition)}
-															<br />
+															<p
+																style={{
+																	textAlign: 'center',
+																	fontSize: '24px',
+																	fontWeight: 'bolder',
+																	marginBottom: 0,
+																}}
+															>
+																Definition:{' '}
+															</p>{' '}
+															<p>{parse(each.definition[each.currentDef].definition)}</p>
 															{each.definition[each.currentDef].example ? (
 																<Fragment>
-																	<b>Example:</b> {parse(each.definition[each.currentDef].example)}
+																	<p
+																		style={{
+																			textAlign: 'center',
+																			fontSize: '24px',
+																			fontWeight: 'bolder',
+																			marginBottom: 0,
+																		}}
+																	>
+																		Example:
+																	</p>
+																	<p>{parse(each.definition[each.currentDef].example)}</p>
 																</Fragment>
 															) : null}
 														</Typography>
+														<Link href={each.definition[each.currentDef].permalink}>
+															<a target='_blank' className={clsx(styles.rLink, styles.link, styles.textUnderlined)}>
+																read more
+															</a>
+														</Link>
 													</Fragment>
 												) : each.ResponseDef ? (
 													<Typography variant='h5'>Couldn't load definitions.</Typography>

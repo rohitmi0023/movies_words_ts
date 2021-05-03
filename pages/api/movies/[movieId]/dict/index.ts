@@ -10,10 +10,9 @@ import nc from 'next-connect';
 const handler = nc();
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-var Owlbot = require('owlbot-js');
 var Filter = require('bad-words'),
 	filter = new Filter();
-
+const ud = require('urban-dictionary');
 interface ExtendedRequest {
 	user: string;
 	body: {
@@ -89,17 +88,13 @@ const validateBody = initMiddleware(
 				.withMessage('Word can contain only alphabets')
 				.custom(async (value, { req }) => {
 					const query = new Promise((resolve, reject) => {
-						connection.query(
-							'SELECT word from movies_word WHERE word = ? AND movie_id = ?',
-							[value, req.body.movieId],
-							(err, results) => {
-								if (!_.isEmpty(results)) {
-									return reject(`${value} is already added!`);
-								} else {
-									resolve(`${value} success!`);
-								}
+						connection.query('SELECT word from movies_word WHERE word = ? AND movie_id = ?', [value, req.body.movieId], results => {
+							if (!_.isEmpty(results)) {
+								return reject(`${value} is already added!`);
+							} else {
+								resolve(`${value} success!`);
 							}
-						);
+						});
 					});
 					await query;
 				}),
@@ -135,82 +130,77 @@ handler.post<ExtendedRequest, ExtendedResponse>(async (req, res) => {
 		} = req.body.currentMovie;
 		let userId = req.body.userId;
 		let word = req.body.word;
-		console.log(`below userId and word`);
 		adult = true ? 1 : 0;
 		video = true ? 1 : 0;
-		var client = Owlbot(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
-		console.log(`process.env.NEXT_PUBLIC_OWLBOT_API_KEY`);
-		console.log(process.env.NEXT_PUBLIC_OWLBOT_API_KEY);
-		const resOwlbot = await client.define(word); //for checking legit english words
-		console.log(`below owlbot check`);
-		console.log(resOwlbot);
-		const profanity = filter.isProfane(word); //returns true if word is profane
-		console.log(`below profanity check`);
-		let data = {
-			id: movieId,
-			adult,
-			homepage,
-			title,
-			original_title,
-			original_language,
-			popularity,
-			released_date,
-			imdb_id,
-			genre,
-			poster_path,
-			production_countries,
-			runtime,
-			status,
-			tagline,
-			video,
-			vote_average,
-			vote_count,
-		};
-		// movies_details table
-		connection.query('SELECT id from `movies_details` WHERE `id` = ?', movieId, (err, results) => {
-			if (err) throw err;
-			if (!results.length) {
-				// Movie isn't added yet, so adding the movie first
-				connection.query('INSERT INTO movies_details SET ?', data, (error, results) => {
+		ud.define(word, (error, results) => {
+			if (error) {
+				return res.status(403).json({ errors: [{ msg: 'No definition found!. Try something similar!', param: 'newWord' }] });
+			} else {
+				const profanity = filter.isProfane(word); //returns true if word is profane
+				let data = {
+					id: movieId,
+					adult,
+					homepage,
+					title,
+					original_title,
+					original_language,
+					popularity,
+					released_date,
+					imdb_id,
+					genre,
+					poster_path,
+					production_countries,
+					runtime,
+					status,
+					tagline,
+					video,
+					vote_average,
+					vote_count,
+				};
+				// movies_details table
+				connection.query('SELECT id from `movies_details` WHERE `id` = ?', movieId, (err, results) => {
 					if (err) throw err;
+					if (!results.length) {
+						// Movie isn't added yet, so adding the movie first
+						connection.query('INSERT INTO movies_details SET ?', data, err => {
+							if (err) throw err;
+						});
+					}
 				});
+				// movies_word table
+				connection.query(
+					'SELECT word, movie_id from `movies_word` WHERE `word` = ? AND `movie_id` = ? ORDER BY upvotes DESC',
+					[word, movieId],
+					(err, results) => {
+						if (err) throw err;
+						if (!results.length) {
+							// word isn't added yet
+							const wordData = {
+								id: uuidv4(),
+								word: word,
+								movie_id: movieId,
+								added_by: userId,
+								profane: profanity ? 1 : 0,
+							};
+							connection.query('INSERT INTO movies_word SET ?', wordData, err => {
+								if (err) throw err;
+								res.status(200).json({
+									word: word,
+									id: wordData.id,
+									upvotes: 0,
+									added_by: userId,
+									profane: profanity ? 1 : 0,
+								});
+							});
+						} else {
+							// Word is already added
+							return res.status(401).json({ errors: [{ msg: `${word} is already added!`, param: 'newWord' }] });
+						}
+					}
+				);
 			}
 		});
-		console.log(`below movies_details query`);
-		// movies_word table
-		connection.query(
-			'SELECT word, movie_id from `movies_word` WHERE `word` = ? AND `movie_id` = ? ORDER BY upvotes DESC',
-			[word, movieId],
-			(err, results) => {
-				if (err) throw err;
-				if (!results.length) {
-					// word isn't added yet
-					const wordData = {
-						id: uuidv4(),
-						word: word,
-						movie_id: movieId,
-						added_by: userId,
-						profane: profanity ? 1 : 0,
-					};
-					connection.query('INSERT INTO movies_word SET ?', wordData, (err, results) => {
-						if (err) throw err;
-						res.status(200).json({
-							word: word,
-							id: wordData.id,
-							upvotes: 0,
-							added_by: userId,
-							profane: profanity ? 1 : 0,
-						});
-					});
-				} else {
-					// Word is already added
-					return res.status(401).json({ errors: [{ msg: `${word} is already added!`, param: 'newWord' }] });
-				}
-			}
-		);
 	} catch (err) {
-		console.log(`above error message`);
-		console.log(err.response.data);
 		console.log(err.message);
 		if (err.response) {
 			if (err.response.data) {

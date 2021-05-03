@@ -50,6 +50,9 @@ export const newWord = ({ currentMovie, userId, word }) => {
 			}
 			return true;
 		} catch (err) {
+			console.log(`word action `);
+			console.log(err.message);
+			console.log(err.response.data);
 			if (err.response) {
 				if (err.response.data) {
 					const errors = err.response.data.errors;

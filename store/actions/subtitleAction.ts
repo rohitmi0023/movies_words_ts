@@ -52,11 +52,7 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 			// Adding new file by presigned method
 			const res = await Axios.get(`/api/movies/${currentMovie.movieId}/subtitles?user=${user.id}`);
 			const { url, fields } = res.data;
-			console.log(res.data);
 			const newUrl = `https://${url.split('/')[3]}.s3.amazonaws.com`;
-			console.log(url.split('/')[3]);
-			// const newUrl = url;
-			console.log(newUrl);
 			const formData = new FormData();
 			const formArray = Object.entries({ ...fields, file: blob });
 			formArray.forEach(([key, value]) => formData.append(key, value as any));
@@ -68,7 +64,6 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 					'Content-Type': 'multipart/form-data',
 				},
 				data: formData,
-				responseType: 'text',
 			});
 			let formValue;
 			if (resDBGET.data.key) {
@@ -86,7 +81,6 @@ export const addSubtitle = ({ user, fileInput, currentMovie }) => async dispatch
 			await Axios.post(`/api/movies/${currentMovie.movieId}/subtitles/db?user=${user.id}`, body, config);
 			dispatch(setAlert('Upload success!', 'subtitle', 'success'));
 		} catch (err) {
-			console.log(err);
 			console.log(err.message);
 			console.log(err.response);
 			if (err.type) {
@@ -130,7 +124,6 @@ export const extractSubtitleAction = ({ currentMovie, user }) => async dispatch 
 			const body = JSON.stringify(formData);
 			// Fetching the suggested words
 			const res = await Axios.post(`/api/movies/${currentMovie.movieId}/subtitles/subtitleWords`, body, config);
-			console.log(res.data);
 			dispatch({
 				type: types.SUBTITLES_WORD_ADD,
 				payload: { data: res.data.response, movieId: currentMovie.movieId },
@@ -139,9 +132,7 @@ export const extractSubtitleAction = ({ currentMovie, user }) => async dispatch 
 			throw { message: "You have'nt added subtitle for this movie!", type: 'extractWords' };
 		}
 	} catch (error) {
-		console.log(error);
 		console.log(error.response);
-		console.log(error.type);
 		if (error.type) {
 			dispatch(setAlert(error.message, error.type, 'error'));
 		}

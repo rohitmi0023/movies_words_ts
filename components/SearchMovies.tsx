@@ -4,7 +4,6 @@ import axios from 'axios';
 import SearchResult from './SearchResult';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import RandomWord from './RandomWord';
 import styles from '../styles/SearchMovies.module.css';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
