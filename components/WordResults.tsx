@@ -7,7 +7,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import styles from '../styles/WordResults.module.css';
 import AlertBar from './AlertBar';
 import BouncingBallLoader from './BouncingBallLoader';
+import { motion } from 'framer-motion';
 
+let delay = -0.5;
 const WordResults = ({ totalWords, user, movieId, isAuthenticated, loadingWords, loadingUserVoting, wordFail }) => {
 	// material ui implementation of switch
 	const [toggleState, setToggleState] = useState({
@@ -36,7 +38,12 @@ const WordResults = ({ totalWords, user, movieId, isAuthenticated, loadingWords,
 	};
 
 	let totalwords = totalWords.map(each => {
-		return <Fragment key={each.id}>{wordList(each)}</Fragment>;
+		delay = delay + 0.5;
+		return (
+			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: delay }} key={each.id}>
+				{wordList(each)}
+			</motion.div>
+		);
 	});
 
 	const handleChange = event => {
@@ -48,7 +55,7 @@ const WordResults = ({ totalWords, user, movieId, isAuthenticated, loadingWords,
 			{user && isAuthenticated ? (
 				// logged in user
 				<FormControlLabel
-					style={{ float: 'right', color: 'white' }}
+					style={{ float: 'right', color: 'white', marginTop: '10px' }}
 					control={<Switch checked={toggleState.checkedA} onChange={handleChange} name='checkedA' color='primary' />}
 					label='My words'
 				/>

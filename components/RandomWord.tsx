@@ -38,7 +38,7 @@ const RandomWord = () => {
 		async function fetchWords2() {
 			try {
 				setRandomWord([]);
-				const res = await Axios.get('/api/home');
+				const res = await Axios.get('/api/home?q=2');
 				res.data.forEach(each => {
 					ud.define(each.word, (error, results) => {
 						if (error) {

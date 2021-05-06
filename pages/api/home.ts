@@ -2,9 +2,11 @@ const connection = require('../../db/dbconfig');
 
 export default async (req, res) => {
 	if (req.method === 'GET') {
+		console.log(req.query.q);
 		try {
 			connection.query(
-				'select movies_details.poster_path, movies_details.title, movies_word.word, movies_word.added_by, movies_word.upvotes from movies_details inner join movies_word on movies_details.id = movies_word.movie_id WHERE movies_word.profane = 0 order by RAND() limit 2',
+				`select movies_details.poster_path, movies_details.title, movies_word.word, movies_word.added_by, movies_word.upvotes from 
+				movies_details inner join movies_word on movies_details.id = movies_word.movie_id WHERE movies_word.profane = 0 order by RAND() limit ${req.query.q}`,
 				async (err, results) => {
 					if (err) throw err;
 					if (results.length) {

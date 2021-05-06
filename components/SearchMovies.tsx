@@ -17,8 +17,10 @@ import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { randomImagesAddition, randomNumberFunction } from '../store/actions/movieImagesAction';
+import { motion } from 'framer-motion';
 
 let cancelToken;
+let delay = 1;
 const useStyles = makeStyles({
 	root: {
 		opacity: 0.8,
@@ -40,6 +42,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 	const classes = useStyles();
 
 	// React local states
+	const [randomWords, setRandomWords] = useState([]);
 	const [searchFormData, setSearchFormData] = useState('');
 	const [searchResultState, setSearchResultState] = useState({
 		Response: null,
@@ -142,6 +145,21 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 			try {
 				randomNumberFunction();
 				randomImagesAddition();
+				const config = {
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				};
+				const response = await axios.get('/api/home?q=3', config);
+				setRandomWords(
+					response.data.map(each => ({
+						word: each.word,
+						translateX: `${Math.random() * 70}vw`,
+						translateY: `${Math.random() * 70}vh`,
+						movie: each.title,
+						display: 'none',
+					}))
+				);
 			} catch (err) {
 				console.log(err);
 			}
@@ -151,8 +169,8 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 
 	return (
 		<Fragment>
-			<div style={{ position: 'relative' }}>
-				{!movieImagesLoading ? (
+			<motion.div style={{ position: 'relative', width: '100%' }}>
+				{!movieImagesLoading && randomWords.length ? (
 					<div
 						className='imageWrapper'
 						style={{
@@ -161,16 +179,42 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 									? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
 									: 'dimgrey',
 							backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
-							backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',
 							width: '100%',
 						}}
 					>
 						<NavBar />
-						<div
+						<motion.div>
+							{randomWords.map(each => {
+								delay = delay + 1;
+								return (
+									<motion.div
+										key={each.word}
+										className={styles.randomWords}
+										style={{
+											translateX: each.translateX,
+											translateY: each.translateY,
+										}}
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: delay }}
+										drag
+										dragMomentum={false}
+										dragConstraints={{ right: 50, top: 50, left: 50, bottom: 100 }}
+									>
+										<motion.div>Word: {each.word}</motion.div>
+										<motion.div>Movie Name: {each.movie}</motion.div>
+									</motion.div>
+								);
+							})}
+						</motion.div>
+						<motion.div
 							className={styles.gridWrapper}
-							style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}
+							style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '5vh' }}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 1 }}
 						>
-							<div className={styles.faqsWrapper}>
+							<motion.div className={styles.faqsWrapper} whileHover={{ scale: 1.1 }} transition={{ duration: 0.5 }}>
 								<Link href='/faqs'>
 									<a>
 										<Card variant='outlined' className={classes.root}>
@@ -182,8 +226,8 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 										</Card>
 									</a>
 								</Link>
-							</div>
-							<div className={styles.randomWordWrapper}>
+							</motion.div>
+							<motion.div className={styles.randomWordWrapper} whileHover={{ scale: 1.1 }} transition={{ duration: 0.5 }}>
 								<Link href='/randomWord'>
 									<a>
 										<Card variant='outlined' className={classes.root}>
@@ -195,7 +239,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 										</Card>
 									</a>
 								</Link>
-							</div>
+							</motion.div>
 							<div className={styles.searchFormWrapper}>
 								<form onSubmit={e => handleSubmit(e)} className={styles.searchForm}>
 									<div className={styles.form}>
@@ -237,14 +281,14 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 									<p className={styles.resultsTextHome}>Nothing Searched!!!</p>
 								)}
 							</div>
-						</div>
+						</motion.div>
 					</div>
 				) : (
 					<div style={{ margin: '40vh 40vw 0 40vw' }}>
 						<BouncingBallLoader message='image wallpaper' variant='purpleHUE' />
 					</div>
 				)}
-			</div>
+			</motion.div>
 		</Fragment>
 	);
 };

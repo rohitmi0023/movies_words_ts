@@ -31,7 +31,7 @@ const NavBar = ({ isAuthenticated, user, logout }) => {
 
 	return (
 		<Fragment>
-			<AppBar style={{ width: '100%', position: 'absolute', backgroundColor: 'inherit' }}>
+			<AppBar style={{ width: '100%', position: 'relative', backgroundColor: 'inherit' }}>
 				<div style={{ margin: '15px 0px' }}>
 					<Typography variant='h4'>
 						<Link href='/'>

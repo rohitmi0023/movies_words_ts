@@ -1,7 +1,7 @@
 .searchForm {
 	position: relative;
 	display: flex;
-	z-index: 2;
+	z-index: 1.5;
 	justify-content: center;
 }
 
@@ -34,10 +34,10 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	justify-content: center;
-	margin: 15vh 5vw 5vh 5vh;
+	margin: 0 5vw 5vh 5vh;
 	position: absolute;
 	gap: 1.5rem;
-	z-index: 2;
+	z-index: 1.5;
 	align-items: center;
 	grid-template-areas: 'a a' 'b b' 'c c';
 	justify-items: center;
@@ -75,4 +75,13 @@
 
 .searchFormWrapper {
 	min-height: 100vh;
+}
+
+.randomWords {
+	background-color: cornflowerblue;
+	padding: 10px 20px;
+	scale: 1;
+	position: absolute;
+	z-index: 2;
+	border-radius: 5%;
 }

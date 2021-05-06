@@ -5,6 +5,7 @@ import { currentMoviePoster } from '../store/actions/movieImagesAction';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Fragment } from 'react';
+import { motion } from 'framer-motion';
 
 const SearchResult = ({ searchresult, currentMoviePoster }) => {
 	let moviesList = [];
@@ -17,10 +18,10 @@ const SearchResult = ({ searchresult, currentMoviePoster }) => {
 	moviesList = searchresult.Search.map(movie => {
 		if (movie.poster_path) {
 			return (
-				<div key={movie.id}>
+				<motion.div key={movie.id} transition={{ duration: 1 }} animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
 					<a onClick={e => handleClick(movie.id, movie.poster_path)}>
 						<div className={styles.movie}>
-							<div className={styles.info}>
+							<motion.div className={styles.info} whileHover={{ scaleY: 1.1 }} transition={{ duration: 0.5 }}>
 								<div className={styles.text}>
 									<p className={styles.movieTitle}>{movie.original_title}</p>
 									<p className={styles.movieTitle}>{movie.release_date}</p>
@@ -29,7 +30,7 @@ const SearchResult = ({ searchresult, currentMoviePoster }) => {
 										<InputTwoToneIcon />
 									</p>
 								</div>
-							</div>
+							</motion.div>
 							<div className={styles.imgContent}>
 								<img
 									src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -39,16 +40,16 @@ const SearchResult = ({ searchresult, currentMoviePoster }) => {
 							</div>
 						</div>
 					</a>
-				</div>
+				</motion.div>
 			);
 		}
 	});
 	return (
 		<Fragment>
 			<p className={styles.resultsText}>Search Results...</p>
-			<div className={styles.gridWrapper} style={{ margin: '0 20px' }}>
+			<motion.div className={styles.gridWrapper} style={{ margin: '0 20px' }}>
 				{moviesList}
-			</div>
+			</motion.div>
 		</Fragment>
 	);
 };

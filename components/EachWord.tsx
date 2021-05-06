@@ -7,6 +7,7 @@ import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 import { Fragment } from 'react';
 var randomColor = require('randomcolor');
 import ClearIcon from '@material-ui/icons/Clear';
+import { motion } from 'framer-motion';
 
 const EachWord = ({ each, user, userUpvotes, userDownvotes, movieId, newVote, deleteWord }) => {
 	// For upvoting and downvoting
@@ -29,7 +30,7 @@ const EachWord = ({ each, user, userUpvotes, userDownvotes, movieId, newVote, de
 
 	return (
 		<Fragment>
-			<div
+			<motion.div
 				className='each-word-wrapper'
 				style={{
 					backgroundColor: randomColor({
@@ -63,7 +64,7 @@ const EachWord = ({ each, user, userUpvotes, userDownvotes, movieId, newVote, de
 					)}
 				</div>
 				<ClearIcon onClick={e => handleDeleteWord(e, each.word)} />
-			</div>
+			</motion.div>
 		</Fragment>
 	);
 };

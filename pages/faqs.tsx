@@ -21,7 +21,6 @@ const faqs = ({ randomImagesAddition, randomNumberFunction, movieImagesLoading, 
 
 	return (
 		<div style={{ position: 'relative' }}>
-			<NavBar />
 			{!movieImagesLoading ? (
 				<div
 					className='imageWrapper'
@@ -35,7 +34,8 @@ const faqs = ({ randomImagesAddition, randomNumberFunction, movieImagesLoading, 
 						width: '100%',
 					}}
 				>
-					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
+					<NavBar />
+					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white' }}>
 						<Typography variant='h2' style={{ textAlign: 'center' }}>
 							FAQs
 						</Typography>

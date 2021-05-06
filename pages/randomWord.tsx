@@ -21,7 +21,6 @@ const randomWord = ({ movieImages, randomNumberFunction, movieImagesLoading, ran
 
 	return (
 		<div style={{ position: 'relative' }}>
-			<NavBar />
 			{!movieImagesLoading ? (
 				<div
 					className='imageWrapper'
@@ -31,11 +30,11 @@ const randomWord = ({ movieImages, randomNumberFunction, movieImagesLoading, ran
 								? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
 								: 'dimgrey',
 						backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
-						backgroundAttachment: movieImages.length === 10 ? 'fixed' : 'unset',
 						width: '100%',
 					}}
 				>
-					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
+					<NavBar />
+					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white' }}>
 						<RandomWord />
 					</div>
 				</div>

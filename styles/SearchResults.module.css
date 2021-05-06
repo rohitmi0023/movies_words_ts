@@ -80,10 +80,10 @@
 	align-items: center;
 }
 
-.text:hover {
+/* .text:hover {
 	transition: 1s;
 	font-size: 22px;
-}
+} */
 
 .moviePoster {
 	width: 100%;

@@ -13,6 +13,7 @@ import styles from '../../../styles/dict.module.css';
 import SubtitleFileUpload from '../../../components/SubtitleFileUpload';
 import AlertBar from '../../../components/AlertBar';
 import BouncingBallLoader from '../../../components/BouncingBallLoader';
+import { motion } from 'framer-motion';
 
 interface IcurrentMovie {
 	movieId: Number;
@@ -140,7 +141,7 @@ const dictionary = ({ loadWords, wordFail, user, userVoting, loadingWords, newWo
 					}}
 				>
 					<NavBar />
-					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '15vh' }}>
+					<div style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white' }}>
 						{currentMovie ? (
 							<Fragment>
 								{currentMovie.title && currentMovie.original_title ? (
