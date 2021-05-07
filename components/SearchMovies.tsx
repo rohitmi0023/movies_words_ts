@@ -170,7 +170,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 	return (
 		<Fragment>
 			<motion.div style={{ position: 'relative', width: '100%' }}>
-				{!movieImagesLoading && randomWords.length ? (
+				{!movieImagesLoading ? (
 					<div
 						className='imageWrapper'
 						style={{
