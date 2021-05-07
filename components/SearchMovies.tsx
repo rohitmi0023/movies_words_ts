@@ -150,16 +150,22 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 						'Content-Type': 'application/json',
 					},
 				};
-				const response = await axios.get('/api/home?q=3', config);
-				setRandomWords(
-					response.data.map(each => ({
-						word: each.word,
-						translateX: `${Math.random() * 70}vw`,
-						translateY: `${Math.random() * 70}vh`,
-						movie: each.title,
-						display: 'none',
-					}))
-				);
+				axios
+					.get('/api/home?q=3', config)
+					.then(response => {
+						setRandomWords(
+							response.data.map(each => ({
+								word: each.word,
+								translateX: `${Math.random() * 70}vw`,
+								translateY: `${Math.random() * 70}vh`,
+								movie: each.title,
+								display: 'none',
+							}))
+						);
+					})
+					.catch(err => {
+						console.log(err);
+					});
 			} catch (err) {
 				console.log(err);
 			}
@@ -183,30 +189,32 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 						}}
 					>
 						<NavBar />
-						<motion.div>
-							{randomWords.map(each => {
-								delay = delay + 1;
-								return (
-									<motion.div
-										key={each.word}
-										className={styles.randomWords}
-										style={{
-											translateX: each.translateX,
-											translateY: each.translateY,
-										}}
-										initial={{ opacity: 0 }}
-										animate={{ opacity: 1 }}
-										transition={{ delay: delay }}
-										drag
-										dragMomentum={false}
-										dragConstraints={{ right: 50, top: 50, left: 50, bottom: 100 }}
-									>
-										<motion.div>Word: {each.word}</motion.div>
-										<motion.div>Movie Name: {each.movie}</motion.div>
-									</motion.div>
-								);
-							})}
-						</motion.div>
+						{randomWords.length ? (
+							<motion.div>
+								{randomWords.map(each => {
+									delay = delay + 1;
+									return (
+										<motion.div
+											key={each.word}
+											className={styles.randomWords}
+											style={{
+												translateX: each.translateX,
+												translateY: each.translateY,
+											}}
+											initial={{ opacity: 0 }}
+											animate={{ opacity: 1 }}
+											transition={{ delay: delay }}
+											drag
+											dragMomentum={false}
+											dragConstraints={{ right: 50, top: 50, left: 50, bottom: 100 }}
+										>
+											<motion.div>Word: {each.word}</motion.div>
+											<motion.div>Movie Name: {each.movie}</motion.div>
+										</motion.div>
+									);
+								})}
+							</motion.div>
+						) : null}
 						<motion.div
 							className={styles.gridWrapper}
 							style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '5vh' }}
