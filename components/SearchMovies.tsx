@@ -153,6 +153,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 				axios
 					.get('/api/home?q=3', config)
 					.then(response => {
+						console.log(`came here in api request`);
 						setRandomWords(
 							response.data.map(each => ({
 								word: each.word,
@@ -189,6 +190,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 						}}
 					>
 						<NavBar />
+						{console.log(randomWords.length)}
 						{randomWords.length ? (
 							<motion.div>
 								{randomWords.map(each => {
