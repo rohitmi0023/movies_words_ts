@@ -4,7 +4,6 @@ const authState = {
 	user: null,
 	isAuth: false,
 	loading: true,
-	isVerified: false,
 	register_state: false,
 };
 
@@ -28,11 +27,6 @@ export const authReducer = (state = authState, action) => {
 				...state,
 				isAuth: true,
 				loading: false,
-			};
-		case types.VERIFICATION_SUCCESS:
-			return {
-				...state,
-				isVerified: true,
 			};
 		case types.REGISTER_FAIL:
 			return {

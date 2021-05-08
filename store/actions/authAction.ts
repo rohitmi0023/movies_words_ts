@@ -133,9 +133,7 @@ export const verifyUser = ({ userId, userEmailHash }) => async dispatch => {
 		const body = JSON.stringify(formData);
 		const res = await Axios.post('/api/auth/verify', body, config);
 		alert(res.data.msg);
-		dispatch({
-			type: types.VERIFICATION_SUCCESS,
-		});
+		return 1;
 	} catch (err) {
 		alert(err.response.data.error);
 	}

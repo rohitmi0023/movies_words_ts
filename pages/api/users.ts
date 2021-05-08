@@ -48,7 +48,7 @@ export default async (req, res) => {
 							let data = {
 								id: userId,
 								username,
-								email,
+								email: trimmedEmail,
 								password: hash,
 								email_hash: emailVerifyHash,
 								avatar,
@@ -61,7 +61,7 @@ export default async (req, res) => {
 										exp: Math.floor(Date.now() / 1000) + 60 * 60,
 									},
 									process.env.JWT_SECRET,
-									(err, token) => {
+									token => {
 										const origin = req.headers.origin;
 										main(emailVerifyHash, userId, email, origin).catch(console.error);
 										return res.status(200).send({ token, emailVerifyHash });
@@ -85,11 +85,8 @@ export default async (req, res) => {
 };
 
 async function main(emailVerifyHash, userId, email, origin) {
-	console.log(`Came here in main function`);
 	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-	console.log(origin);
 	const link = `${origin}/auth/verify/${userId}?q=${emailVerifyHash}`;
-	console.log(link);
 	const msg = {
 		to: email,
 		from: 'rohitracer0023@gmail.com',

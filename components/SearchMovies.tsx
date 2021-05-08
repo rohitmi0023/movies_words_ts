@@ -153,7 +153,6 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 				axios
 					.get('/api/home?q=3', config)
 					.then(response => {
-						console.log(`came here in api request`);
 						setRandomWords(
 							response.data.map(each => ({
 								word: each.word,

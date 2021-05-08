@@ -8,7 +8,6 @@ import { randomNumberFunction, randomImagesAddition } from '../../../store/actio
 
 export const index = ({ register_state, loading, randomNumberFunction, movieImages, randomNumberState, randomImagesAddition }) => {
 	const router = useRouter();
-
 	useEffect(() => {
 		if (!register_state) {
 			router.push('/auth/signup');
@@ -24,10 +23,20 @@ export const index = ({ register_state, loading, randomNumberFunction, movieImag
 		MovieFetching();
 	}, []);
 	return (
-		<Fragment>
-			<NavBar />
+		<div style={{ position: 'relative', width: '100%' }}>
 			{movieImages.length ? (
-				<div className='imageWrapper'>
+				<div
+					className='imageWrapper'
+					style={{
+						backgroundImage:
+							movieImages.length === 10
+								? 'url(' + `https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}` + ')'
+								: 'dimgrey',
+						backgroundSize: movieImages.length === 10 ? 'cover' : 'unset',
+						width: '100%',
+						minHeight: '100vh',
+					}}
+				>
 					{loading ? (
 						<div
 							style={{
@@ -40,13 +49,16 @@ export const index = ({ register_state, loading, randomNumberFunction, movieImag
 							<CircularProgress />
 						</div>
 					) : register_state ? (
-						<div style={{ position: 'absolute', zIndex: 1, marginTop: '15vh' }}>
-							<br />
-							<br />
-							<h2 style={{ textAlign: 'center', color: 'white' }}>Thanks for signing up!</h2>
-							<h6 style={{ margin: '10px 25px', color: 'white' }}>
-								An email has been sent to your given gmail account. Please go to the email to complete your sign up process.
-							</h6>
+						<div>
+							<NavBar />
+							<div style={{ position: 'absolute', zIndex: 2 }}>
+								<br />
+								<br />
+								<h2 style={{ textAlign: 'center', color: 'white' }}>Thanks for signing up!</h2>
+								<h6 style={{ margin: '10px 25px', color: 'white' }}>
+									An email has been sent to your given gmail account. Please go to the email to complete your sign up process.
+								</h6>
+							</div>
 						</div>
 					) : (
 						<h3
@@ -60,16 +72,13 @@ export const index = ({ register_state, loading, randomNumberFunction, movieImag
 							You have not registered yet!
 						</h3>
 					)}
-					<div className='imageWrapper'>
-						<img src={`https://image.tmdb.org/t/p/original/${movieImages[randomNumberState].poster}`} alt='movieImages' />
-					</div>
 				</div>
 			) : (
 				<div>
 					<CircularProgress />
 				</div>
 			)}
-		</Fragment>
+		</div>
 	);
 };
 
