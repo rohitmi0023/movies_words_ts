@@ -190,7 +190,7 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 					>
 						<NavBar />
 						{console.log(randomWords.length)}
-						{randomWords.length ? (
+						{randomWords ? (
 							<motion.div>
 								{randomWords.map(each => {
 									delay = delay + 1;
