@@ -189,33 +189,32 @@ const SearchMovies = ({ randomImagesAddition, randomNumberFunction, movieImagesL
 						}}
 					>
 						<NavBar />
-						{console.log(randomWords.length)}
-						{randomWords ? (
-							<motion.div>
-								{randomWords.map(each => {
-									delay = delay + 1;
-									return (
-										<motion.div
-											key={each.word}
-											className={styles.randomWords}
-											style={{
-												translateX: each.translateX,
-												translateY: each.translateY,
-											}}
-											initial={{ opacity: 0 }}
-											animate={{ opacity: 1 }}
-											transition={{ delay: delay }}
-											drag
-											dragMomentum={false}
-											dragConstraints={{ right: 50, top: 50, left: 50, bottom: 100 }}
-										>
-											<motion.div>Word: {each.word}</motion.div>
-											<motion.div>Movie Name: {each.movie}</motion.div>
-										</motion.div>
-									);
-								})}
-							</motion.div>
-						) : null}
+						<motion.div>
+							{randomWords
+								? randomWords.map(each => {
+										delay = delay + 1;
+										return (
+											<motion.div
+												key={each.word}
+												className={styles.randomWords}
+												style={{
+													translateX: each.translateX,
+													translateY: each.translateY,
+												}}
+												initial={{ opacity: 0 }}
+												animate={{ opacity: 1 }}
+												transition={{ delay: delay }}
+												drag
+												dragMomentum={false}
+												dragConstraints={{ right: 50, top: 50, left: 50, bottom: 100 }}
+											>
+												<motion.div>Word: {each.word}</motion.div>
+												<motion.div>Movie Name: {each.movie}</motion.div>
+											</motion.div>
+										);
+								  })
+								: null}
+						</motion.div>
 						<motion.div
 							className={styles.gridWrapper}
 							style={{ zIndex: 1, opacity: 1, position: 'relative', color: 'white', marginTop: '5vh' }}
