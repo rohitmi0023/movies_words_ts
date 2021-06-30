@@ -25,4 +25,8 @@ hashId.propTypes = {
 	verifyUser: PropTypes.func.isRequired,
 };
 
-export default connect({ verifyUser })(hashId);
+const mapStateToProps = state => {
+	return {};
+};
+
+export default connect(mapStateToProps, { verifyUser })(hashId);

@@ -1,3 +1,4 @@
+// to verify the user from mail
 const connection = require('../../../db/dbconfig');
 
 export default (req, res) => {
